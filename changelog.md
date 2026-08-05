@@ -1,6 +1,9 @@
 # Changelog
 
 * Fixed #223 (Leaking debug log)
+* Added `ItemRequestMigrationWarning`, issued when an item request cannot be represented in the target version's format and is dropped
+    * Exporting to `version=(1, 0)` silently discarded requests of non-normal quality, which could remove `items` from the output entirely
+    * Equipment grid requests exported to `version=(1, 0)` as a count of `0` rather than being omitted
 
 ## 3.3.1
 * Updated `factorio-data` to version `2.0.77` (latest)
