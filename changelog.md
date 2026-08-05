@@ -1,6 +1,8 @@
 # Changelog
 
 * Fixed #223 (Leaking debug log)
+* Added `ElectricPole.supply_area_distance` and `ElectricPole.get_world_supply_area()`
+    * Mirrors `circuit_wire_max_distance`, including the quality adjustment and returning `None` for unknown prototypes
 
 ## 3.3.1
 * Updated `factorio-data` to version `2.0.77` (latest)
