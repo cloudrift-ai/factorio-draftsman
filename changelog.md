@@ -1,6 +1,7 @@
 # Changelog
 
 * Fixed #223 (Leaking debug log)
+* Fixed a bug in `examples/entities/decider_combinator.py`
 
 ## 3.3.1
 * Updated `factorio-data` to version `2.0.77` (latest)
