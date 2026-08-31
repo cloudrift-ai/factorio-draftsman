@@ -626,16 +626,24 @@ def run_data_lifecycle(
     # point in any of the subsequent steps.
     # This is not included in `factorio-data` and has to be manually extracted
     # (See compatibility/defines.lua for more info).
-    if version_string_to_tuple(mods["base"].version) < (2, 0):
-        lua.execute(
-            file_to_string(
-                os.path.join(draftsman_path, "compatibility", "defines", "1.0.0.lua")
-            )
+    game_version = version_string_to_tuple(mods["base"].version)
+    defines_filename = version_tuple_to_string(game_version[:2]) + ".lua"
+    lua.execute(
+        file_to_string(
+            os.path.join(draftsman_path, "compatibility", "defines", defines_filename)
         )
-    else:
-        lua.execute(
-            file_to_string(os.path.join(draftsman_path, "compatibility", "defines.lua"))
-        )
+    )
+
+    # if version_string_to_tuple(mods["base"].version) < (2, 0):
+    #     lua.execute(
+    #         file_to_string(
+    #             os.path.join(draftsman_path, "compatibility", "defines", "1.0.0.lua")
+    #         )
+    #     )
+    # else:
+    #     lua.execute(
+    #         file_to_string(os.path.join(draftsman_path, "compatibility", "defines.lua"))
+    #     )
 
     if verbose:
         print("Owned DLC:")
@@ -858,7 +866,8 @@ def get_items(lua, game_version: tuple[int, int, int, int]):
     # Iterate over every item
     add_items(data.raw["item"])
     add_items(data.raw["item-with-entity-data"])
-    add_items(data.raw["tool"])
+    if game_version < (2, 1):
+        add_items(data.raw["tool"])
     add_items(data.raw["ammo"])
     add_items(data.raw["module"])
     add_items(data.raw["armor"])
@@ -1522,7 +1531,11 @@ def extract_qualities(
 
 
 def extract_recipes(
-    lua: lupa.LuaRuntime, draftsman_path: str, sort_tuple, verbose: bool = False
+    lua: lupa.LuaRuntime,
+    game_version: tuple[int, int, int],
+    draftsman_path: str,
+    sort_tuple,
+    verbose: bool = False,
 ) -> None:
     """
     Extracts the recipes to ``recipes.pkl`` in :py:mod:`draftsman.data`.
@@ -1537,9 +1550,13 @@ def extract_recipes(
         out_categories[category] = []
 
     unsorted_recipes = convert_table_to_dict(data.raw["recipe"])
-    for recipe in unsorted_recipes:
-        category = unsorted_recipes[recipe].get("category", "crafting")
-        out_categories[category].append(unsorted_recipes[recipe]["name"])
+    for recipe_name, recipe in unsorted_recipes.items():
+        if game_version < (2, 1):
+            categories = [recipe.get("category", "crafting")]
+        else:
+            categories = recipe.get("categories", ["crafting"])
+        for c in categories:
+            out_categories[c].append(recipe_name)
 
     machines = convert_table_to_dict(data.raw["assembling-machine"])
     for machine_name in machines:
@@ -1905,7 +1922,7 @@ def extract_data(
     extract_modules(lua, draftsman_path, items, verbose)
     extract_planets(lua, draftsman_path, verbose)
     extract_qualities(lua, draftsman_path, items, verbose)
-    extract_recipes(lua, draftsman_path, items, verbose)
+    extract_recipes(lua, game_version, draftsman_path, items, verbose)
     extract_signals(lua, draftsman_path, items, verbose)
     extract_tiles(lua, draftsman_path, verbose)
 

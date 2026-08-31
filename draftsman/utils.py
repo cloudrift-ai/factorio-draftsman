@@ -185,7 +185,7 @@ class AABB(Shape):
         bounding_box.bot_right[1] += self.position[1]
         return bounding_box
 
-    def rotate(self, amt: int) -> "AABB":
+    def rotate(self, amt: int) -> "AABB | Rectangle":
         """
         Rotates the :py:class:`.AABB` by increments of 90 degrees and returns a
         new transformed instance.
@@ -200,33 +200,40 @@ class AABB(Shape):
         :param amt: The amount to rotate, expressed as an increments of 22.5
             degrees.
         """
-        if amt % 4 != 0:
-            raise ValueError(
-                "Cannot rotate an AABB by anything other than 90 degree increments"
+        if amt % 4 == 0:
+            # Rotating by 90 degrees, so we can remain an AABB
+
+            # TODO: do this routine with a lookup table instead of float math and
+            # min/max
+            rot_top_left = rotate_point(self.top_left, math.radians(amt * 22.5))
+            rot_bot_right = rotate_point(self.bot_right, math.radians(amt * 22.5))
+
+            # top_left = Vector(
+            #     min(rot_top_left.x, rot_bot_right.x), min(rot_top_left.y, rot_bot_right.y)
+            # )
+            top_left = [
+                min(rot_top_left[0], rot_bot_right[0]),
+                min(rot_top_left[1], rot_bot_right[1]),
+            ]
+            # bot_right = Vector(
+            #     max(rot_top_left.x, rot_bot_right.x), max(rot_top_left.y, rot_bot_right.y)
+            # )
+            bot_right = [
+                max(rot_top_left[0], rot_bot_right[0]),
+                max(rot_top_left[1], rot_bot_right[1]),
+            ]
+
+            return AABB(
+                top_left[0], top_left[1], bot_right[0], bot_right[1], self.position
             )
-
-        # TODO: do this routine with a lookup table instead of float math and
-        # min/max
-
-        rot_top_left = rotate_point(self.top_left, math.radians(amt * 22.5))
-        rot_bot_right = rotate_point(self.bot_right, math.radians(amt * 22.5))
-
-        # top_left = Vector(
-        #     min(rot_top_left.x, rot_bot_right.x), min(rot_top_left.y, rot_bot_right.y)
-        # )
-        top_left = [
-            min(rot_top_left[0], rot_bot_right[0]),
-            min(rot_top_left[1], rot_bot_right[1]),
-        ]
-        # bot_right = Vector(
-        #     max(rot_top_left.x, rot_bot_right.x), max(rot_top_left.y, rot_bot_right.y)
-        # )
-        bot_right = [
-            max(rot_top_left[0], rot_bot_right[0]),
-            max(rot_top_left[1], rot_bot_right[1]),
-        ]
-
-        return AABB(top_left[0], top_left[1], bot_right[0], bot_right[1], self.position)
+        else:
+            # Convert the AABB into a rectangle with the new angle
+            width = self.bot_right.x - self.top_left.x
+            height = self.bot_right.y - self.top_left.y
+            center = self.top_left + (width / 2, height / 2)
+            return Rectangle(
+                position=center, width=width, height=height, angle=(amt * 22.5)
+            )
 
     def __eq__(self, other: "AABB") -> bool:
         return (

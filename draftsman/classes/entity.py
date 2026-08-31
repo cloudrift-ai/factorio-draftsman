@@ -968,18 +968,6 @@ def migrate_name(
     original_name: str, source_version: tuple[int, ...], dest_version: tuple[int, ...]
 ) -> str:
     # TODO: figure out migration
-    # legacy_entity_conversions = {
-    #     "curved-rail": "legacy-curved-rail",
-    #     "straight-rail": "legacy-straight-rail",
-    #     "logistic-chest-requester": "requester-chest",
-    #     "logistic-chest-buffer": "buffer-chest",
-    #     "logistic-chest-storage": "storage-chest",
-    #     "logistic-chest-active-provider": "active-provider-chest",
-    #     "logistic-chest-passive-provider": "passive-provider-chest",
-    #     "filter-inserter": "inserter",
-    #     "stack-inserter": "bulk-inserter",
-    #     "stack-filter-inserter": "bulk-inserter",
-    # }
     matrix = {
         (1, 0): {
             (2, 0): {
@@ -990,7 +978,16 @@ def migrate_name(
                 "logistic-chest-passive-provider": "passive-provider-chest",
                 "logistic-chest-requester": "requester-chest",
                 "logistic-chest-storage": "storage-chest",
-            }
+            },
+            (2, 1): {
+                "curved-rail": "legacy-curved-rail",
+                "straight-rail": "legacy-straight-rail",
+                "logistic-chest-active-provider": "active-provider-chest",
+                "logistic-chest-buffer": "buffer-chest",
+                "logistic-chest-passive-provider": "passive-provider-chest",
+                "logistic-chest-requester": "requester-chest",
+                "logistic-chest-storage": "storage-chest",
+            },
         },
         (1, 1): {
             (2, 0): {
@@ -1001,9 +998,38 @@ def migrate_name(
                 "logistic-chest-passive-provider": "passive-provider-chest",
                 "logistic-chest-requester": "requester-chest",
                 "logistic-chest-storage": "storage-chest",
-            }
+            },
+            (2, 1): {
+                "curved-rail": "legacy-curved-rail",
+                "straight-rail": "legacy-straight-rail",
+                "logistic-chest-active-provider": "active-provider-chest",
+                "logistic-chest-buffer": "buffer-chest",
+                "logistic-chest-passive-provider": "passive-provider-chest",
+                "logistic-chest-requester": "requester-chest",
+                "logistic-chest-storage": "storage-chest",
+            },
         },
         (2, 0): {
+            (1, 0): {
+                "legacy-curved-rail": "curved-rail",
+                "legacy-straight-rail": "straight-rail",
+                "active-provider-chest": "logistic-chest-active-provider",
+                "buffer-chest": "logistic-chest-buffer",
+                "passive-provider-chest": "logistic-chest-passive-provider",
+                "requester-chest": "logistic-chest-requester",
+                "storage-chest": "logistic-chest-storage",
+            },
+            (1, 1): {
+                "legacy-curved-rail": "curved-rail",
+                "legacy-straight-rail": "straight-rail",
+                "active-provider-chest": "logistic-chest-active-provider",
+                "buffer-chest": "logistic-chest-buffer",
+                "passive-provider-chest": "logistic-chest-passive-provider",
+                "requester-chest": "logistic-chest-requester",
+                "storage-chest": "logistic-chest-storage",
+            },
+        },
+        (2, 1): {
             (1, 0): {
                 "legacy-curved-rail": "curved-rail",
                 "legacy-straight-rail": "straight-rail",

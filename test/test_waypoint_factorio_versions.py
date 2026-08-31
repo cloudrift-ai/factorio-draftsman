@@ -29,7 +29,15 @@ def main():
     # Only select versions >= 1.0
     tag_list = tag_list[tag_list.index((1, 0, 0, 0)) :]
 
-    versions = [(1, 0, 0), (1, 1, 0), (1, 1, 110), (2, 0, 8), tag_list[-1]]
+    versions = [
+        (1, 0, 0),
+        (1, 1, 0),
+        (1, 1, 110),
+        (2, 0, 8),
+        (2, 0, 77),
+        (2, 1, 8),
+        tag_list[-1],
+    ]
 
     failed_versions = []
     for version in versions:

@@ -1,5 +1,7 @@
 # Changelog
 
+* Updated `factorio-data` to version `2.1.17` (latest)
+* Updated `defines.lua` to version `2.1.17` (latest)
 * Fixed #223 (Leaking debug log)
 * Fixed a bug in `examples/entities/decider_combinator.py`
 

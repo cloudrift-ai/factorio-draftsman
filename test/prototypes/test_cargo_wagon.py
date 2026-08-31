@@ -174,13 +174,20 @@ class TestCargoWagon:
         assert wagon.inventory.size == 40
 
         if "quality" in mods.versions:
-            assert wagon.prototype.get("quality_affects_inventory_size", False) is False
             wagon.quality = "legendary"
-            assert wagon.inventory.size == 40
-
-            # Manually override to test the modded case
-            wagon.prototype["quality_affects_inventory_size"] = True
-            assert wagon.inventory.size == 100
+            if mods.versions["base"] < (2, 1):
+                # Factorio 1.X / 2.0.X did not have legendary wagons
+                assert (
+                    wagon.prototype.get("quality_affects_inventory_size", False)
+                    is False
+                )
+                assert wagon.inventory.size == 40
+            else:
+                # Factorio 2.1 does
+                assert (
+                    wagon.prototype.get("quality_affects_inventory_size", False) is True
+                )
+                assert wagon.inventory.size == 100
 
         with pytest.warns(UnknownEntityWarning):
             wagon = CargoWagon("unknown wagon")

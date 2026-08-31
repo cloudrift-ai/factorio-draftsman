@@ -7,7 +7,7 @@ from draftsman.serialization import draftsman_converters
 from draftsman.signatures import (
     Comparator,
     QualityID,
-    uint8,
+    uint32,
     EntityFilter,
     TileFilter,
 )
@@ -52,22 +52,30 @@ class DeconstructionPlanner(Blueprintable):
     # =========================================================================
 
     @property
-    def entity_filter_count(self) -> uint8:
+    def entity_filter_count(self) -> uint32:
         """
         The total number of entity filters that this DeconstructionPlanner can
         support simultaneously.
+
+        If the filter count value is not specified, the maximum uint32 value is
+        returned, indicating that there is no limit on the number of filters
+        specified (which is true for Factorio > 2.0).
         """
-        return items.raw[self.item].get("entity_filter_count", 0)
+        return items.raw[self.item].get("entity_filter_count", 2**32)
 
     # =========================================================================
 
     @property
-    def tile_filter_count(self) -> uint8:
+    def tile_filter_count(self) -> uint32:
         """
         The total number of tile filters that this DeconstructionPlanner can
         support simultaneously.
+
+        If the filter count value is not specified, the maximum uint32 value is
+        returned, indicating that there is no limit on the number of filters
+        specified (which is true for Factorio > 2.0).
         """
-        return items.raw[self.item].get("tile_filter_count", 0)
+        return items.raw[self.item].get("tile_filter_count", 2**32)
 
     # =========================================================================
 
