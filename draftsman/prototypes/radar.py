@@ -26,9 +26,7 @@ class Radar(CircuitConnectableMixin, EnergySourceMixin, Entity):
     # =========================================================================
 
     mode: RadarMode = attrs.field(
-        default = RadarMode.SURFACE,
-        converter=RadarMode,
-        validator=instance_of(RadarMode)
+        default=RadarMode.SURFACE, converter=RadarMode, validator=instance_of(RadarMode)
     )
     """
     .. serialized::
@@ -41,9 +39,9 @@ class Radar(CircuitConnectableMixin, EnergySourceMixin, Entity):
     """
 
     universe_channel: Optional[SignalID] = attrs.field(
-        default = None,
+        default=None,
         converter=SignalID.converter,
-        validator=instance_of(Optional[SignalID])
+        validator=instance_of(Optional[SignalID]),
     )
     """
     .. serialized::
@@ -67,7 +65,7 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
     lambda _: {
         ("control_behavior", "mode"): None,
         ("control_behavior", "universe_channel"): None,
-    }
+    },
 )
 
 draftsman_converters.get_version((2, 1)).add_hook_fns(
@@ -75,5 +73,5 @@ draftsman_converters.get_version((2, 1)).add_hook_fns(
     lambda fields: {
         ("control_behavior", "mode"): fields.mode.name,
         ("control_behavior", "universe_channel"): fields.universe_channel.name,
-    }
+    },
 )

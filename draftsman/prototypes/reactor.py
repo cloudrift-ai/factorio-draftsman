@@ -14,6 +14,7 @@ from draftsman.data.entities import reactors
 
 import attrs
 
+
 @attrs.define
 class Reactor(
     ControlBehaviorMixin,

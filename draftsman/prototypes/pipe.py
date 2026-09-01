@@ -15,7 +15,11 @@ import attrs
 
 @attrs.define
 class Pipe(
-    CircuitReadTemperatureMixin, CircuitReadPipeMixin, CircuitSplitOutputMixin, CircuitConnectableMixin, Entity
+    CircuitReadTemperatureMixin,
+    CircuitReadPipeMixin,
+    CircuitSplitOutputMixin,
+    CircuitConnectableMixin,
+    Entity,
 ):
     """
     A structure that transports a fluid across a surface.

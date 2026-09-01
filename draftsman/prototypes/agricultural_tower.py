@@ -41,7 +41,9 @@ class AgriculturalTower(
 
     # =========================================================================
 
-    enable_harvesting_condition: bool = attrs.field(default=False, validator=instance_of(bool))
+    enable_harvesting_condition: bool = attrs.field(
+        default=False, validator=instance_of(bool)
+    )
     """
     .. serialized::
     
@@ -56,7 +58,7 @@ class AgriculturalTower(
     harvesting_condition: Optional[Condition] = attrs.field(
         factory=Condition,
         converter=Condition.converter,
-        validator=instance_of(Optional[Condition])
+        validator=instance_of(Optional[Condition]),
     )
     """
     .. serialized::
@@ -68,9 +70,10 @@ class AgriculturalTower(
 
     .. versionadded:: 4.0.0 (Factorio 2.1)
     """
-    
 
-    enable_planting_condition: bool = attrs.field(default=False, validator=instance_of(bool))
+    enable_planting_condition: bool = attrs.field(
+        default=False, validator=instance_of(bool)
+    )
     """
     .. serialized::
     
@@ -85,7 +88,7 @@ class AgriculturalTower(
     planting_condition: Optional[Condition] = attrs.field(
         factory=Condition,
         converter=Condition.converter,
-        validator=instance_of(Optional[Condition])
+        validator=instance_of(Optional[Condition]),
     )
     """
     .. serialized::
@@ -115,17 +118,21 @@ class AgriculturalTower(
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
     AgriculturalTower,
-    lambda fields: {
-        ("control_behavior", "read_contents"): fields.read_contents.name
-    },
+    lambda fields: {("control_behavior", "read_contents"): fields.read_contents.name},
 )
 
 draftsman_converters.get_version((2, 1)).add_hook_fns(
     AgriculturalTower,
     lambda fields: {
-        ("control_behavior", "enable_harvesting_condition"): fields.enable_harvesting_condition.name,
+        (
+            "control_behavior",
+            "enable_harvesting_condition",
+        ): fields.enable_harvesting_condition.name,
         ("control_behavior", "harvesting_condition"): fields.harvesting_condition.name,
-        ("control_behavior", "enable_planting_condition"): fields.enable_planting_condition.name,
+        (
+            "control_behavior",
+            "enable_planting_condition",
+        ): fields.enable_planting_condition.name,
         ("control_behavior", "planting_condition"): fields.planting_condition.name,
         ("control_behavior", "read_contents"): fields.read_contents.name,
     },

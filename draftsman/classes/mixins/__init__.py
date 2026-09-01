@@ -8,7 +8,9 @@ from draftsman.classes.mixins.circuit_read_contents import CircuitReadContentsMi
 from draftsman.classes.mixins.circuit_read_hand import CircuitReadHandMixin
 from draftsman.classes.mixins.circuit_read_pipe import CircuitReadPipeMixin
 from draftsman.classes.mixins.circuit_read_resource import CircuitReadResourceMixin
-from draftsman.classes.mixins.circuit_read_temperature import CircuitReadTemperatureMixin
+from draftsman.classes.mixins.circuit_read_temperature import (
+    CircuitReadTemperatureMixin,
+)
 from draftsman.classes.mixins.circuit_set_filters import CircuitSetFiltersMixin
 from draftsman.classes.mixins.circuit_split_input import CircuitSplitInputMixin
 from draftsman.classes.mixins.circuit_split_output import CircuitSplitOutputMixin

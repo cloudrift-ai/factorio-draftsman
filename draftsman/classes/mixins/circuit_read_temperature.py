@@ -53,7 +53,7 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
     lambda fields: {
         ("control_behavior", "read_temperature"): fields.read_temperature.name,
         ("control_behavior", "temperature_signal"): fields.temperature_signal.name,
-    }
+    },
 )
 
 draftsman_converters.get_version((2, 1)).add_hook_fns(
@@ -61,5 +61,5 @@ draftsman_converters.get_version((2, 1)).add_hook_fns(
     lambda fields: {
         ("control_behavior", "read_temperature"): fields.read_temperature.name,
         ("control_behavior", "temperature_signal"): fields.temperature_signal.name,
-    }
+    },
 )

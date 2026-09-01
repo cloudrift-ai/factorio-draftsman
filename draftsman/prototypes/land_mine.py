@@ -1,7 +1,11 @@
 # land_mine.py
 
 from draftsman.classes.entity import Entity
-from draftsman.classes.mixins import CircuitConditionMixin, CircuitEnableMixin, CircuitConnectableMixin
+from draftsman.classes.mixins import (
+    CircuitConditionMixin,
+    CircuitEnableMixin,
+    CircuitConnectableMixin,
+)
 
 from draftsman.data.entities import land_mines
 
@@ -9,7 +13,9 @@ import attrs
 
 
 @attrs.define
-class LandMine(CircuitConditionMixin, CircuitEnableMixin, CircuitConnectableMixin, Entity):
+class LandMine(
+    CircuitConditionMixin, CircuitEnableMixin, CircuitConnectableMixin, Entity
+):
     """
     An entity that explodes when in proximity to another force.
     """
@@ -21,5 +27,6 @@ class LandMine(CircuitConditionMixin, CircuitEnableMixin, CircuitConnectableMixi
     # =========================================================================
 
     __hash__ = Entity.__hash__
+
 
 # TODO: write custom hook that only allows land mines to be circuit connectable post Factorio 2.1

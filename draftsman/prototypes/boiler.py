@@ -45,8 +45,7 @@ class Boiler(
     # =========================================================================
 
     read_fuel: Optional[bool] = attrs.field(
-        default = False,
-        validator=instance_of(Optional[bool])
+        default=False, validator=instance_of(Optional[bool])
     )
     """
     .. serialized::

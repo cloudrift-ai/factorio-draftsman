@@ -29,7 +29,7 @@ class CircuitReadPipeMixin(Exportable):
     configured output wires.
 
     .. versionadded 4.0.0 (Factorio 2.1)
-    """    
+    """
 
 
 draftsman_converters.get_version((2, 1)).add_hook_fns(

@@ -1,7 +1,13 @@
 # lab.py
 
 from draftsman.classes.entity import Entity
-from draftsman.classes.mixins import ModulesMixin, CircuitSplitOutputMixin, CircuitSplitInputMixin, CircuitConnectableMixin, EnergySourceMixin
+from draftsman.classes.mixins import (
+    ModulesMixin,
+    CircuitSplitOutputMixin,
+    CircuitSplitInputMixin,
+    CircuitConnectableMixin,
+    EnergySourceMixin,
+)
 from draftsman.constants import InventoryType
 from draftsman.serialization import draftsman_converters
 from draftsman.signatures import Condition, QualityID, SignalID
@@ -15,7 +21,14 @@ from typing import Iterable, Optional
 
 
 @attrs.define
-class Lab(ModulesMixin, CircuitSplitOutputMixin, CircuitSplitInputMixin, CircuitConnectableMixin, EnergySourceMixin, Entity):
+class Lab(
+    ModulesMixin,
+    CircuitSplitOutputMixin,
+    CircuitSplitInputMixin,
+    CircuitConnectableMixin,
+    EnergySourceMixin,
+    Entity,
+):
     """
     An entity that consumes items and produces research.
     """
@@ -23,26 +36,22 @@ class Lab(ModulesMixin, CircuitSplitOutputMixin, CircuitSplitInputMixin, Circuit
     @attrs.define
     class ResearchCondition(Condition):
         condition: Condition = attrs.field(
-            factory = Condition,
+            factory=Condition,
             converter=Condition.converter,
-            validator=instance_of(Condition)
+            validator=instance_of(Condition),
         )
         """
         The condition that must pass in order for this lab to pick this 
         technology to research.
         """
-        name: Optional[str] = attrs.field( # TODO: should be technology name
-            default=None,
-            validator=instance_of(Optional[str])
+        name: Optional[str] = attrs.field(  # TODO: should be technology name
+            default=None, validator=instance_of(Optional[str])
         )
         """
         The name of the technology to research if this condition passes. Can be
         omitted, in which case this condition will be ignored.
         """
-        count: int = attrs.field(
-            default = 0,
-            validator=instance_of(int)
-        )
+        count: int = attrs.field(default=0, validator=instance_of(int))
         """
         Unknown.
         """
@@ -98,8 +107,7 @@ class Lab(ModulesMixin, CircuitSplitOutputMixin, CircuitSplitInputMixin, Circuit
     # =========================================================================
 
     set_research: Optional[bool] = attrs.field(
-        default=False,
-        validator=instance_of(Optional[bool])
+        default=False, validator=instance_of(Optional[bool])
     )
     """
     .. serialized::
@@ -114,8 +122,7 @@ class Lab(ModulesMixin, CircuitSplitOutputMixin, CircuitSplitInputMixin, Circuit
     """
 
     research_conditions: list[ResearchCondition] = attrs.field(
-        factory = list,
-        validator = instance_of(list[ResearchCondition])
+        factory=list, validator=instance_of(list[ResearchCondition])
     )
     """
     .. serialized::
@@ -128,10 +135,7 @@ class Lab(ModulesMixin, CircuitSplitOutputMixin, CircuitSplitInputMixin, Circuit
     .. versionadded:: 4.0.0 (Factorio 2.1)
     """
 
-    read_contents: bool = attrs.field(
-        default = False,
-        validator=instance_of(bool)
-    )
+    read_contents: bool = attrs.field(default=False, validator=instance_of(bool))
     """
     .. serialized::
         
@@ -143,10 +147,7 @@ class Lab(ModulesMixin, CircuitSplitOutputMixin, CircuitSplitInputMixin, Circuit
     .. versionadded:: 4.0.0 (Factorio 2.1)
     """
 
-    read_research_cost: bool = attrs.field(
-        default = False,
-        validator=instance_of(bool)
-    )
+    read_research_cost: bool = attrs.field(default=False, validator=instance_of(bool))
     """
     .. serialized::
         
@@ -159,8 +160,7 @@ class Lab(ModulesMixin, CircuitSplitOutputMixin, CircuitSplitInputMixin, Circuit
     """
 
     read_technology_level: bool = attrs.field(
-        default = False,
-        validator=instance_of(bool)
+        default=False, validator=instance_of(bool)
     )
     """
     .. serialized::
@@ -174,9 +174,9 @@ class Lab(ModulesMixin, CircuitSplitOutputMixin, CircuitSplitInputMixin, Circuit
     """
 
     technology_level_signal: Optional[SignalID] = attrs.field(
-        factory = lambda: SignalID(name="signal-L", type="virtual"),
-        converter = SignalID.converter,
-        validator = instance_of(Optional[SignalID])
+        factory=lambda: SignalID(name="signal-L", type="virtual"),
+        converter=SignalID.converter,
+        validator=instance_of(Optional[SignalID]),
     )
     """
     .. serialized::
@@ -205,6 +205,7 @@ class Lab(ModulesMixin, CircuitSplitOutputMixin, CircuitSplitInputMixin, Circuit
 
     __hash__ = Entity.__hash__
 
+
 draftsman_converters.get_version((2, 1)).add_hook_fns(
     Lab.ResearchCondition,
     lambda fields: {
@@ -221,7 +222,13 @@ draftsman_converters.get_version((2, 1)).add_hook_fns(
         ("control_behavior", "conditions"): fields.research_conditions.name,
         ("control_behavior", "read_contents"): fields.read_contents.name,
         ("control_behavior", "read_research_cost"): fields.read_research_cost.name,
-        ("control_behavior", "read_technology_level"): fields.read_technology_level.name,
-        ("control_behavior", "technology_level_signal"): fields.technology_level_signal.name,
-    }
+        (
+            "control_behavior",
+            "read_technology_level",
+        ): fields.read_technology_level.name,
+        (
+            "control_behavior",
+            "technology_level_signal",
+        ): fields.technology_level_signal.name,
+    },
 )
