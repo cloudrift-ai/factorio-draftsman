@@ -3,6 +3,8 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     LogisticModeOfOperationMixin,
+    CircuitSplitOutputMixin,
+    CircuitSplitInputMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
     ControlBehaviorMixin,
@@ -20,6 +22,8 @@ import attrs
 class LogisticBufferContainer(
     InventoryMixin,
     LogisticModeOfOperationMixin,
+    CircuitSplitOutputMixin,
+    CircuitSplitInputMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
     ControlBehaviorMixin,

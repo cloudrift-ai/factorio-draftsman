@@ -194,8 +194,8 @@ class AABB(Shape):
         ``4`` is a rotation of 90 degrees clockwise and ``-4`` is a rotation of
         90 degrees counter-clockwise.
 
-        :raises ValueError: If ``amt`` is not % 4, as AABB's can only be rotated
-            by 90 degrees.
+        If the AABB is not rotated by a multiple of 90 degrees, then this
+        method returns a :py:class:`.Rectangle` object instead.
 
         :param amt: The amount to rotate, expressed as an increments of 22.5
             degrees.

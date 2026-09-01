@@ -107,3 +107,11 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
     },
     lambda fields, converter: {"connections": None},
 )
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    CircuitConnectableMixin,
+    lambda fields: {
+        "connections": fields._connections.name,
+    },
+    lambda fields, converter: {"connections": None},
+)

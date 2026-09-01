@@ -423,9 +423,8 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
 )
 
 
-draftsman_converters.get_version((2, 0)).add_hook_fns(
-    ArithmeticCombinator,
-    lambda fields: {
+def struct_2_X(fields):
+    return {
         (
             "control_behavior",
             "arithmetic_conditions",
@@ -482,8 +481,11 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
             "arithmetic_conditions",
             "output_signal",
         ): fields.output_signal.name,
-    },
-    lambda fields, converter: {
+    }
+
+
+def unstruct_2_X(fields, converter):
+    return {
         (
             "control_behavior",
             "arithmetic_conditions",
@@ -552,5 +554,16 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
             "arithmetic_conditions",
             "output_signal",
         ): fields.output_signal.name,
-    },
+    }
+
+
+draftsman_converters.get_version((2, 0)).add_hook_fns(
+    ArithmeticCombinator,
+    struct_2_X,
+    unstruct_2_X,
+)
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    ArithmeticCombinator,
+    struct_2_X,
+    unstruct_2_X,
 )

@@ -143,3 +143,19 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
         ("control_behavior", "working_signal"): fields.working_signal.name,
     },
 )
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    CraftingMachineMixin,
+    lambda fields: {
+        ("control_behavior", "set_recipe"): fields.circuit_set_recipe.name,
+        ("control_behavior", "read_contents"): fields.read_contents.name,
+        ("control_behavior", "include_in_crafting"): fields.include_in_crafting.name,
+        ("control_behavior", "read_recipe_finished"): fields.read_recipe_finished.name,
+        (
+            "control_behavior",
+            "recipe_finished_signal",
+        ): fields.recipe_finished_signal.name,
+        ("control_behavior", "read_working"): fields.read_working.name,
+        ("control_behavior", "working_signal"): fields.working_signal.name,
+    },
+)

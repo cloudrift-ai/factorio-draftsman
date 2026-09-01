@@ -1,6 +1,12 @@
 # pipe.py
 
 from draftsman.classes.entity import Entity
+from draftsman.classes.mixins import (
+    CircuitReadTemperatureMixin,
+    CircuitReadPipeMixin,
+    CircuitSplitOutputMixin,
+    CircuitConnectableMixin,
+)
 
 from draftsman.data.entities import pipes
 
@@ -8,7 +14,9 @@ import attrs
 
 
 @attrs.define
-class Pipe(Entity):
+class Pipe(
+    CircuitReadTemperatureMixin, CircuitReadPipeMixin, CircuitSplitOutputMixin, CircuitConnectableMixin, Entity
+):
     """
     A structure that transports a fluid across a surface.
     """

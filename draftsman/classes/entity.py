@@ -1173,6 +1173,41 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
     },
 )
 
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    Entity,
+    lambda fields: {
+        "entity_number": None,
+        "name": (
+            fields.name,
+            lambda input, _, inst, args: migrate_name(
+                input,
+                source_version=(2, 0),
+                dest_version=mods.versions.get("base", DEFAULT_FACTORIO_VERSION),
+            ),
+        ),
+        "position": fields.position.name,
+        "mirror": fields.mirror.name,
+        "quality": fields.quality.name,
+        "items": fields.item_requests.name,
+        "tags": fields.tags.name,
+    },
+    lambda fields, converter: {
+        "name": (
+            fields.name,
+            lambda inst: migrate_name(
+                inst.name,
+                source_version=mods.versions.get("base", DEFAULT_FACTORIO_VERSION),
+                dest_version=(2, 0),
+            ),
+        ),
+        "position": _export_fields.global_position,
+        "mirror": fields.mirror.name,
+        "quality": fields.quality.name,
+        "items": fields.item_requests.name,
+        "tags": fields.tags.name,
+    },
+)
+
 # def entity_structure_factory_factory(version: tuple[int, ...]):
 #     def entity_structure_factory(cl: type, converter: cattrs.Converter):
 #         print(cl)

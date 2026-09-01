@@ -37,6 +37,7 @@ SelectorOperations = Literal[
     "rocket-capacity",
     "quality-filter",
     "quality-transfer",
+    "time",
 ]
 
 

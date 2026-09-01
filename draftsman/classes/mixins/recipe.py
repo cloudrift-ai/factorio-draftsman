@@ -176,3 +176,11 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
         "recipe_quality": fields.recipe_quality.name,
     },
 )
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    RecipeMixin,
+    lambda fields: {
+        "recipe": fields.recipe.name,
+        "recipe_quality": fields.recipe_quality.name,
+    },
+)

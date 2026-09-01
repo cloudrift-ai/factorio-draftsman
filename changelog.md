@@ -1,7 +1,34 @@
 # Changelog
 
+## 4.0.0
+
 * Updated `factorio-data` to version `2.1.17` (latest)
 * Updated `defines.lua` to version `2.1.17` (latest)
+* Added `(2, 1)` version import/export target
+* All entities that have split input/output selectable wires are implemented via `CircuitSplitInputMixin` and `CircuitSplitOutputMixin`
+* All pipe types (`Pipe`, `UndergroundPipe`, `StorageTank`): 
+    * Circuit connectable
+    * `read_mode` determines how the fluid contents of the pipe/pipeline is broadcast
+    * Can broadcast the temperature of the contained fluid
+* `Boiler`: 
+    * Now circuit connectable
+    * Can be enabled/disabled via circuit condition
+    * Can be enabled/disabled via logistic condition
+    * `read_fuel` toggle (for applicable entities)
+* `Lab`:
+    * Now circuit connectable
+    * Research conditions enabled via `set_research` and `research_conditions`
+    * Added `read_contents`, `read_research_cost`, `read_technology_level`, and `technology_level_signal`
+* `LandMine`:
+    * Now circuit connectable
+    * Can be enabled/disabled via circuit condition
+* `HeatPipe`: 
+    * Now circuit connectable
+    * Can broadcast it's temperature
+* `Radar`:
+    * Added `mode`, `universe_channel`
+* `SpacePlatformHub`:
+    * Added `set_requests`, `provide_to_other_platforms`
 * Fixed #223 (Leaking debug log)
 * Fixed a bug in `examples/entities/decider_combinator.py`
 

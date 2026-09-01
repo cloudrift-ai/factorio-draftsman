@@ -97,3 +97,12 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
         ("control_behavior", "output_signal"): fields.output_signal.name,
     },
 )
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    Wall,
+    lambda fields: {
+        ("control_behavior", "circuit_open_gate"): fields.circuit_enabled.name,
+        ("control_behavior", "circuit_read_gate"): fields.read_gate.name,
+        ("control_behavior", "output_signal"): fields.output_signal.name,
+    },
+)

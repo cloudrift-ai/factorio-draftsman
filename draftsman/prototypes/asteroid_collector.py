@@ -2,6 +2,8 @@
 
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
+    CircuitSplitOutputMixin,
+    CircuitSplitInputMixin,
     CircuitSetFiltersMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
@@ -22,6 +24,8 @@ from typing import Optional
 
 @attrs.define
 class AsteroidCollector(
+    CircuitSplitOutputMixin,
+    CircuitSplitInputMixin,
     CircuitSetFiltersMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,

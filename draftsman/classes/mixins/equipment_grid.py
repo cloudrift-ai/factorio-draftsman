@@ -289,3 +289,11 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
         "grid": fields.equipment.name,
     },
 )
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    EquipmentGridMixin,
+    lambda fields: {
+        "enable_logistics_while_moving": fields.enable_logistics_while_moving.name,
+        "grid": fields.equipment.name,
+    },
+)

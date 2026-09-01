@@ -177,6 +177,17 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
     },
 )
 
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    InfinityContainer.Filter,
+    lambda fields: {
+        "index": fields.index.name,
+        "name": fields.name.name,
+        "quality": fields.quality.name,
+        "count": fields.count.name,
+        "mode": fields.mode.name,
+    },
+)
+
 draftsman_converters.add_hook_fns(
     InfinityContainer,
     lambda fields: {

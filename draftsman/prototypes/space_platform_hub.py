@@ -33,6 +33,16 @@ class SpacePlatformHub(
 
     # =========================================================================
 
+    set_requests: bool = attrs.field(default=False, validator=instance_of(bool))
+    """
+    Whether or not this space platform should set it's requests dynamically via
+    its circuit network input wires.
+
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+    """
+
+    # =========================================================================
+
     read_contents: bool = attrs.field(default=True, validator=instance_of(bool))
     """
     Whether or not to broadcast the contents of the hub to any connected circuit
@@ -115,12 +125,25 @@ class SpacePlatformHub(
 
     # =========================================================================
 
+    provide_to_other_platforms: bool = attrs.field(
+        default=False, validator=instance_of(bool)
+    )
+    """
+    Whether or not this platform should satisfy the requests of other platforms
+    in orbit if it's own requests for that item are sufficient.
+
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+    """
+
+    # =========================================================================
+
     __hash__ = Entity.__hash__
 
 
 draftsman_converters.add_hook_fns(
     SpacePlatformHub,
     lambda fields: {
+        ("control_behavior", "set_requests"): fields.set_requests.name,
         ("control_behavior", "read_contents"): fields.read_contents.name,
         ("control_behavior", "send_to_platform"): fields.send_to_platform.name,
         ("control_behavior", "read_moving_from"): fields.read_moving_from.name,
@@ -130,5 +153,6 @@ draftsman_converters.add_hook_fns(
         ("control_behavior", "read_damage_taken"): fields.read_damage_taken.name,
         ("control_behavior", "damage_taken_signal"): fields.damage_taken_signal.name,
         "request_missing_construction_materials": fields.request_missing_construction_materials.name,
+        "providing_to_other_platforms": fields.provide_to_other_platforms.name,
     },
 )

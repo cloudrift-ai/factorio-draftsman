@@ -43,3 +43,8 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
     PlayerDescriptionMixin,
     lambda fields: {"player_description": fields.player_description.name},
 )
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    PlayerDescriptionMixin,
+    lambda fields: {"player_description": fields.player_description.name},
+)

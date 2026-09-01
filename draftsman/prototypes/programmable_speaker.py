@@ -526,3 +526,37 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
         ("alert_parameters", "alert_message"): fields.alert_message.name,
     },
 )
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    ProgrammableSpeaker,
+    lambda fields: {
+        (
+            "control_behavior",
+            "circuit_parameters",
+            "signal_value_is_pitch",
+        ): fields.signal_value_is_pitch.name,
+        (
+            "control_behavior",
+            "circuit_parameters",
+            "stop_playing_sounds",
+        ): fields.stop_playing_sounds.name,
+        (
+            "control_behavior",
+            "circuit_parameters",
+            "instrument_id",
+        ): fields.instrument_id.name,
+        ("control_behavior", "circuit_parameters", "note_id"): fields.note_id.name,
+        ("parameters", "playback_volume"): fields.volume.name,
+        ("parameters", "playback_mode"): fields.playback_mode.name,
+        ("parameters", "allow_polyphony"): fields.allow_polyphony.name,
+        (
+            "parameters",
+            "volume_controlled_by_signal",
+        ): fields.volume_controlled_by_signal.name,
+        ("parameters", "volume_signal_id"): fields.volume_signal.name,
+        ("alert_parameters", "show_alert"): fields.show_alert.name,
+        ("alert_parameters", "show_on_map"): fields.show_alert_on_map.name,
+        ("alert_parameters", "icon_signal_id"): fields.alert_icon.name,
+        ("alert_parameters", "alert_message"): fields.alert_message.name,
+    },
+)

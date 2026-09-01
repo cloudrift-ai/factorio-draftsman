@@ -1,6 +1,7 @@
 # heat_pipe.py
 
 from draftsman.classes.entity import Entity
+from draftsman.classes.mixins import CircuitReadTemperatureMixin, CircuitSplitOutputMixin, CircuitConnectableMixin
 
 from draftsman.data.entities import heat_pipes
 
@@ -8,7 +9,7 @@ import attrs
 
 
 @attrs.define
-class HeatPipe(Entity):
+class HeatPipe(CircuitReadTemperatureMixin, CircuitSplitOutputMixin, CircuitConnectableMixin, Entity):
     """
     An entity used to transfer thermal energy.
     """

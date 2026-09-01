@@ -155,3 +155,14 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
         "ignore_unlisted_targets_condition": fields.ignore_unlisted_targets_condition.name,
     },
 )
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    TargetPrioritiesMixin,
+    lambda fields: {
+        "priority-list": fields.priority_list.name,
+        "ignore_unprioritized": fields.ignore_unprioritized.name,
+        "set_priority_list": fields.set_priority_list.name,
+        "set_ignore_unprioritized": fields.set_ignore_unprioritized.name,
+        "ignore_unlisted_targets_condition": fields.ignore_unlisted_targets_condition.name,
+    },
+)

@@ -305,3 +305,22 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
         ("control_behavior", "priority_signal"): fields.priority_signal.name,
     },
 )
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    TrainStop,
+    lambda fields: {
+        "station": fields.station.name,
+        "manual_trains_limit": fields.manual_trains_limit.name,
+        "priority": fields.priority.name,
+        ("control_behavior", "send_to_train"): fields.send_to_train.name,
+        ("control_behavior", "read_from_train"): fields.read_from_train.name,
+        ("control_behavior", "read_stopped_train"): fields.read_stopped_train.name,
+        ("control_behavior", "train_stopped_signal"): fields.train_stopped_signal.name,
+        ("control_behavior", "set_trains_limit"): fields.signal_limits_trains.name,
+        ("control_behavior", "trains_limit_signal"): fields.trains_limit_signal.name,
+        ("control_behavior", "read_trains_count"): fields.read_trains_count.name,
+        ("control_behavior", "trains_count_signal"): fields.trains_count_signal.name,
+        ("control_behavior", "set_priority"): fields.set_priority.name,
+        ("control_behavior", "priority_signal"): fields.priority_signal.name,
+    },
+)

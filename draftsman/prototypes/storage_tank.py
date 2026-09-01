@@ -1,7 +1,13 @@
 # storage_tank.py
 
 from draftsman.classes.entity import Entity
-from draftsman.classes.mixins import CircuitConnectableMixin, DirectionalMixin
+from draftsman.classes.mixins import (
+    CircuitSplitOutputMixin,
+    CircuitReadPipeMixin,
+    CircuitConnectableMixin,
+    CircuitReadTemperatureMixin,
+    DirectionalMixin,
+)
 
 from draftsman.data.entities import storage_tanks
 
@@ -9,7 +15,14 @@ import attrs
 
 
 @attrs.define
-class StorageTank(CircuitConnectableMixin, DirectionalMixin, Entity):
+class StorageTank(
+    CircuitReadTemperatureMixin,
+    CircuitReadPipeMixin,
+    CircuitSplitOutputMixin,
+    CircuitConnectableMixin,
+    DirectionalMixin,
+    Entity,
+):
     """
     An entity that stores a fluid.
     """

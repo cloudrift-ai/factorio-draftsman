@@ -243,6 +243,7 @@ class DraftsmanConverters:
 draftsman_converters = DraftsmanConverters()
 draftsman_converters.add_version((1, 0))
 draftsman_converters.add_version((2, 0))
+draftsman_converters.add_version((2, 1))
 
 
 def make_unstructure_function_from_schema(

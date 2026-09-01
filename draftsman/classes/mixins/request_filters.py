@@ -174,3 +174,13 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
         ("request_filters", "sections"): fields.sections.name,
     },
 )
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    RequestFiltersMixin,
+    lambda fields: {
+        ("request_filters", "trash_not_requested"): fields.trash_not_requested.name,
+        ("request_filters", "request_from_buffers"): fields.request_from_buffers.name,
+        ("request_filters", "enabled"): fields.requests_enabled.name,
+        ("request_filters", "sections"): fields.sections.name,
+    },
+)
