@@ -647,6 +647,44 @@ class MiningDrillReadMode(IntEnum):
 
 
 @document_enum
+class PipeReadMode(IntEnum):
+    """
+    In what manner should a pipe or storage tank broadcast it's fluid contents.
+
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+    """
+
+    NONE = 0
+    """
+    Don't broadcast any value even when circuit connected.
+    """
+    READ_CONTENTS = 1
+    """
+    Broadcast only the contents of this particular pipe segment/storage tank.
+    (Default)
+    """
+    READ_PIPELINE = 2
+    """
+    Broadcast the volume of the entire connected fluid network.
+    """
+
+
+@document_enum
+class RadarMode(IntEnum):
+    """How the radar should broadcast signals provided to it."""
+
+    SURFACE = 1
+    """
+    Pass signals across the surface.
+    """
+
+    UNIVERSE = 2
+    """
+    Pass the signals across all surfaces.
+    """
+
+
+@document_enum
 class SiloReadMode(IntEnum):
     """
     Determines how rocket silos should interact with the circuit network.

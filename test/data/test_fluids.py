@@ -21,9 +21,14 @@ class TestFluidData:
         assert fluids.get_temperature_range("water") == (15, 100)
 
         if mods.versions.get("base", DEFAULT_FACTORIO_VERSION) < (2, 0):
+            # 1.X
             assert fluids.get_temperature_range("steam") == (15, 1000)
-        else:
+        elif mods.versions.get("base", DEFAULT_FACTORIO_VERSION) < (2, 1):
+            # 2.0.X
             assert fluids.get_temperature_range("steam") == (15, 5000)
+        else:
+            # 2.1.X
+            assert fluids.get_temperature_range("steam") == (15, 500)
 
         if mods.versions.get("base", DEFAULT_FACTORIO_VERSION) < (1, 1):
             # Only 1.0 has this range

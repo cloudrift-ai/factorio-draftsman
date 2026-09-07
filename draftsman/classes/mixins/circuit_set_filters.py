@@ -23,6 +23,10 @@ class CircuitSetFiltersMixin(Exportable):
     from connected circuit networks.
     """
 
+    def merge(self, other: "CircuitSetFiltersMixin"):
+        super().merge(other)
+        self.circuit_set_filters = other.circuit_set_filters
+
 
 draftsman_converters.add_hook_fns(
     CircuitSetFiltersMixin,

@@ -234,6 +234,17 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
     },
 )
 
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    WaitCondition,
+    lambda fields: {
+        "type": fields.type.name,
+        "compare_type": fields.compare_type.name,
+        "station": fields.station.name,
+        "ticks": fields.ticks.name,
+        "condition": fields.condition.name,
+    },
+)
+
 
 class WaitConditions:
     """
@@ -646,6 +657,15 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
     },
 )
 
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    Schedule.Stop,
+    lambda fields: {
+        "station": fields.station.name,
+        "wait_conditions": fields.wait_conditions.name,
+        "allows_unloading": fields.allows_unloading.name,
+    },
+)
+
 draftsman_converters.add_hook_fns(
     Schedule.Interrupt,
     lambda fields: {
@@ -666,6 +686,15 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
 )
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
+    Schedule,
+    lambda fields: {
+        "locomotives": fields.locomotives.name,
+        ("schedule", "records"): fields.stops.name,
+        ("schedule", "interrupts"): fields.interrupts.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     Schedule,
     lambda fields: {
         "locomotives": fields.locomotives.name,

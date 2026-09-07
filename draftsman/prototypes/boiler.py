@@ -3,16 +3,31 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     EnergySourceMixin,
+    LogisticConditionMixin,
+    CircuitConditionMixin,
+    CircuitEnableMixin,
+    CircuitConnectableMixin,
     DirectionalMixin,
 )
+from draftsman.serialization import draftsman_converters
+from draftsman.validators import instance_of
 
 from draftsman.data.entities import boilers
 
 import attrs
+from typing import Optional
 
 
 @attrs.define
-class Boiler(EnergySourceMixin, DirectionalMixin, Entity):
+class Boiler(
+    EnergySourceMixin,
+    LogisticConditionMixin,
+    CircuitConditionMixin,
+    CircuitEnableMixin,
+    CircuitConnectableMixin,
+    DirectionalMixin,
+    Entity,
+):
     """
     An entity that uses a fuel to convert a fluid (usually water) to another
     fluid (usually steam).
@@ -26,4 +41,28 @@ class Boiler(EnergySourceMixin, DirectionalMixin, Entity):
 
     # =========================================================================
 
+    read_fuel: Optional[bool] = attrs.field(
+        default=False, validator=instance_of(Optional[bool])
+    )
+    """
+    .. serialized::
+    
+        This attribute is imported/exported from blueprint strings.
+
+    Whether or not this entity should broadcast its current fuel level to the
+    configured output circuit wires.
+
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+    """
+
+    # =========================================================================
+
     __hash__ = Entity.__hash__
+
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    Boiler,
+    lambda fields: {
+        ("control_behavior", "read_fuel"): fields.read_fuel.name,
+    },
+)

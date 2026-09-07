@@ -273,6 +273,11 @@ class EquipmentGridMixin(Exportable):  # (ItemRequestMixin)
             if request != BlueprintInsertPlan(id=request.id)
         ]
 
+    def merge(self, other: "EquipmentGridMixin"):
+        super().merge(other)
+        self.enable_logistics_while_moving = other.enable_logistics_while_moving
+        self.equipment = other.equipment
+
 
 draftsman_converters.get_version((1, 0)).add_hook_fns(
     EquipmentGridMixin,
@@ -283,6 +288,14 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
 )
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
+    EquipmentGridMixin,
+    lambda fields: {
+        "enable_logistics_while_moving": fields.enable_logistics_while_moving.name,
+        "grid": fields.equipment.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     EquipmentGridMixin,
     lambda fields: {
         "enable_logistics_while_moving": fields.enable_logistics_while_moving.name,

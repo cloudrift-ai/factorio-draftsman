@@ -4,5 +4,5 @@
 :py:mod:`~draftsman.classes.mixins.control_behavior`
 ====================================================
 
-.. autoclass:: ControlBehaviorMixin
+.. autoclass:: CircuitSplitIOMixin
     :members:

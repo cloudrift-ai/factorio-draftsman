@@ -1,49 +1,65 @@
 # control_behavior.py
 
 from draftsman.classes.exportable import Exportable
+from draftsman.serialization import draftsman_converters
 from draftsman.signatures import (
-    Comparator,
-    Condition,
-    SignalID,
-    int32,
+    CircuitNetworkSelection,
 )
+from draftsman.validators import instance_of
 
-from typing import Union
+import attrs
 
 
-class ControlBehaviorMixin(Exportable):
+@attrs.define(slots=False)
+class CircuitSplitIOMixin(Exportable):
     """
-    Enables the entity to specify control behavior.
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+
+    Enables the entity to specify split input/output circuit wires.
     """
 
-    def _set_condition(
-        self,
-        condition_name: str,
-        first_operand: Union[SignalID, None],
-        comparator: Comparator,
-        second_operand: Union[SignalID, int32],
-    ):
-        """
-        Single function for setting a condition. Used in `CircuitConditionMixin`
-        as well as `LogisticConditionMixin`. Their functionality is identical,
-        just with different key names inside `control_behavior`.
+    input_networks: CircuitNetworkSelection = attrs.field(
+        factory=CircuitNetworkSelection,
+        converter=CircuitNetworkSelection.converter,
+        validator=instance_of(CircuitNetworkSelection),
+    )
+    """
+    .. serialized::
 
-        :param condition_name: The string name of the key to set the condition
-            under.
-        :param first_operand: The first signal, it's name, or ``None``.
-        :param comparator: The comparator string.
-        :param second_operand: The second signal, it's name, or some integer constant.
+        This attribute is imported/exported from blueprint strings.
 
-        :exception DataFormatError: If ``first_operand`` is not a valid signal
-            name, if ``comparator`` is not a valid operation, or if
-            ``second_operand`` is neither a valid signal name nor a constant.
-        """
-        condition = Condition(first_signal=first_operand, comparator=comparator)
+    What wires should be considered for this entity's circuit inputs.
 
-        # B (should never be None)
-        if isinstance(second_operand, int):
-            condition.constant = second_operand
-        else:
-            condition.second_signal = second_operand
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+    """
 
-        setattr(self, condition_name, condition)
+    output_networks: CircuitNetworkSelection = attrs.field(
+        factory=CircuitNetworkSelection,
+        converter=CircuitNetworkSelection.converter,
+        validator=instance_of(CircuitNetworkSelection),
+    )
+    """
+    .. serialized::
+
+        This attribute is imported/exported from blueprint strings.
+
+    What wires should be considered for this entity's circuit outputs.
+
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+    """
+
+    # =========================================================================
+
+    def merge(self, other: "CircuitSplitIOMixin"):
+        super().merge(other)
+        self.input_networks = other.input_networks
+        self.output_networks = other.output_networks
+
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    CircuitSplitIOMixin,
+    lambda fields: {
+        ("control_behavior", "input_networks"): fields.input_networks.name,
+        ("control_behavior", "output_networks"): fields.output_networks.name,
+    },
+)

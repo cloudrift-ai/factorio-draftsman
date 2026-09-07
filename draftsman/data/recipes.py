@@ -71,7 +71,7 @@ def get_recipe_ingredients(recipe_name: str, expensive: bool = False):
 
 def is_usable_on(recipe_name: str, surface_name: str) -> bool:
     """
-    Determines whether
+    Determines whether or not a recipe can be used on a particular surface.
     """
     recipe = raw[recipe_name]
     if "surface_conditions" not in recipe:

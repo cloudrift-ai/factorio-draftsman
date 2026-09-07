@@ -21,7 +21,7 @@ def main():
     # An Input is defined with a SignalID followed by a `CircuitNetworkSelection`
     # (which wire colors to read from). If no network specification is given,
     # an Input defaults to both red and green wire colors:
-    assert Input("signal-A") == Input("signal-A", {"red", "green"})
+    assert Input("signal-A").networks == Input("signal-A", {"red", "green"}).networks
 
     # Conditions objects are easiest to specify using equality operators:
     condition_1 = Input("signal-A") > Input("signal-B", {"red"})

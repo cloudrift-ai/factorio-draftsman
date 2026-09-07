@@ -6,7 +6,7 @@ from draftsman.classes.mixins import (
     LogisticConditionMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
 )
@@ -22,7 +22,7 @@ class TransportBelt(
     LogisticConditionMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
     Entity,

@@ -81,3 +81,11 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
         ("control_behavior", "circuit_contents_read_mode"): fields.read_mode.name,
     },
 )
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    CircuitReadContentsMixin,
+    lambda fields: {
+        ("control_behavior", "circuit_read_hand_contents"): fields.read_contents.name,
+        ("control_behavior", "circuit_contents_read_mode"): fields.read_mode.name,
+    },
+)

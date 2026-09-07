@@ -4,7 +4,7 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     EnergySourceMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
 )
 from draftsman.serialization import draftsman_converters
@@ -19,7 +19,7 @@ from typing import Optional
 
 @attrs.define
 class Accumulator(
-    ControlBehaviorMixin, CircuitConnectableMixin, EnergySourceMixin, Entity
+    CircuitSplitIOMixin, CircuitConnectableMixin, EnergySourceMixin, Entity
 ):
     """
     An entity that stores electricity for periods of high demand.

@@ -13,7 +13,7 @@ import attrs
 
 __all__ = ["__version__", "__version_info__", "DEFAULT_FACTORIO_VERSION"]
 
-DEFAULT_FACTORIO_VERSION = (2, 0, 0)
+DEFAULT_FACTORIO_VERSION = (2, 1, 0)
 """
 The Factorio version that Draftsman should assume it is operating under if it
 cannot determine the version from it's current environment, due to its absence

@@ -69,6 +69,7 @@ class ConverterVersion:
         }
         self.structure_funcs = {}
         self.unstructure_funcs = {}
+        self.subclass_ignores = {}
         self.schemas = {}
 
     def register_structure_hook(self, *args, **kwargs):
@@ -103,15 +104,19 @@ class ConverterVersion:
         cls: type,
         structure_func: Optional[Callable],
         unstructure_func: Optional[Callable] = None,
+        subclasses_to_ignore: Optional[list[type]] = None,
     ):
         self.structure_funcs[cls] = structure_func
         if unstructure_func is not None:
             self.unstructure_funcs[cls] = unstructure_func
+        if subclasses_to_ignore is not None:
+            self.subclass_ignores[cls] = subclasses_to_ignore
 
     def get_structure_dict(self, cls: type, converter: cattrs.Converter) -> dict:
+        subclasses_to_ignore = self.subclass_ignores.get(cls, [])
         res = {}
         for subcls in reversed(cls.mro()):
-            if subcls in self.structure_funcs:
+            if subcls in self.structure_funcs and subcls not in subclasses_to_ignore:
                 if len(inspect.signature(self.structure_funcs[subcls]).parameters) == 1:
                     call_value = self.structure_funcs[subcls](attrs.fields(subcls))
                 else:
@@ -127,8 +132,11 @@ class ConverterVersion:
         return res
 
     def get_unstructure_dict(self, cls: type, converter: cattrs.Converter) -> dict:
+        subclasses_to_ignore = self.subclass_ignores.get(cls, [])
         res = {}
         for subcls in reversed(cls.mro()):
+            if subcls in subclasses_to_ignore:
+                continue
             if subcls in self.unstructure_funcs:
                 res.update(
                     {
@@ -243,6 +251,7 @@ class DraftsmanConverters:
 draftsman_converters = DraftsmanConverters()
 draftsman_converters.add_version((1, 0))
 draftsman_converters.add_version((2, 0))
+draftsman_converters.add_version((2, 1))
 
 
 def make_unstructure_function_from_schema(

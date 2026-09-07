@@ -54,3 +54,14 @@ def test_flags():
         assert car.dual_power_connectable == False
         assert car.circuit_connectable == False
         assert car.dual_circuit_connectable == False
+
+
+def test_merge():
+    car1 = Car("tank")
+    car2 = Car("tank", driver_is_main_gunner=True, selected_gun_index=1)
+
+    assert car1.mergable_with(car2)
+    car1.merge(car2)
+
+    assert car1.driver_is_main_gunner is True
+    assert car1.selected_gun_index == 1

@@ -4,7 +4,7 @@ from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     RequestFiltersMixin,
     LogisticModeOfOperationMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
 )
 
@@ -17,7 +17,7 @@ import attrs
 class CargoLandingPad(
     RequestFiltersMixin,
     LogisticModeOfOperationMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     Entity,
 ):

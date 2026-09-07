@@ -54,7 +54,7 @@ class TestRailSignal:
             "position": {"x": 0.5, "y": 0.5},
             "control_behavior": {
                 "red_output_signal": {"name": "signal-A", "type": "virtual"},
-                "yellow_output_signal": {"name": "signal-B", "type": "virtual"},
+                "orange_output_signal": {"name": "signal-B", "type": "virtual"},
                 "green_output_signal": {"name": "signal-C", "type": "virtual"},
             },
         }
@@ -70,7 +70,7 @@ class TestRailSignal:
             "position": {"x": 0.5, "y": 0.5},
             "control_behavior": {
                 "red_output_signal": {"name": "signal-A", "type": "virtual"},
-                "yellow_output_signal": {"name": "signal-B", "type": "virtual"},
+                "orange_output_signal": {"name": "signal-B", "type": "virtual"},
                 "green_output_signal": {"name": "signal-C", "type": "virtual"},
             },
         }
@@ -100,7 +100,7 @@ class TestRailSignal:
             "name": "rail-signal",
             "position": {"x": 0.5, "y": 0.5},
             "control_behavior": {
-                "yellow_output_signal": {"name": "signal-T", "type": "virtual"},
+                "orange_output_signal": {"name": "signal-T", "type": "virtual"},
             },
         }
 
@@ -220,7 +220,7 @@ class TestRailSignal:
             "name": "rail-signal",
             "position": {"x": 0.5, "y": 0.5},
             "control_behavior": {
-                "yellow_output_signal": {"name": "signal-A", "type": "virtual"}
+                "orange_output_signal": {"name": "signal-A", "type": "virtual"}
             },
         }
 
@@ -232,7 +232,7 @@ class TestRailSignal:
             "name": "rail-signal",
             "position": {"x": 0.5, "y": 0.5},
             "control_behavior": {
-                "yellow_output_signal": {"name": "signal-B", "type": "virtual"}
+                "orange_output_signal": {"name": "signal-B", "type": "virtual"}
             },
         }
 
@@ -245,7 +245,7 @@ class TestRailSignal:
             "name": "rail-signal",
             "position": {"x": 0.5, "y": 0.5},
             "control_behavior": {
-                "yellow_output_signal": {"name": "unknown", "type": "virtual"}
+                "orange_output_signal": {"name": "unknown", "type": "virtual"}
             },
         }
 
@@ -340,7 +340,7 @@ class TestRailSignal:
 
         assert signal1.to_dict(version=(2, 0))["control_behavior"] == {
             "red_output_signal": {"name": "signal-A", "type": "virtual"},
-            "yellow_output_signal": {"name": "signal-B", "type": "virtual"},
+            "orange_output_signal": {"name": "signal-B", "type": "virtual"},
             "green_output_signal": {"name": "signal-C", "type": "virtual"},
         }
 

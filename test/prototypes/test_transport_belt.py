@@ -59,10 +59,11 @@ class TestTransportBelt:
                     "circuit_read_hand_contents": True,
                     "circuit_contents_read_mode": BeltReadMode.HOLD,
                 },
-            }
+            },
+            version=(2, 1),
         )
 
-        assert fast_belt.to_dict() == {
+        assert fast_belt.to_dict(version=(2, 1)) == {
             "name": "fast-transport-belt",
             "direction": Direction.EAST,
             "position": {"x": 0.5, "y": 0.5},
@@ -130,7 +131,12 @@ class TestTransportBelt:
 
         belt.circuit_enabled = True
         assert belt.circuit_enabled == True
-        assert belt.to_dict() == {
+        assert belt.to_dict(version=(1, 0)) == {
+            "name": "transport-belt",
+            "position": {"x": 0.5, "y": 0.5},
+            "control_behavior": {"circuit_enable_disable": True},
+        }
+        assert belt.to_dict(version=(2, 0)) == {
             "name": "transport-belt",
             "position": {"x": 0.5, "y": 0.5},
             "control_behavior": {"circuit_enabled": True},
@@ -143,7 +149,7 @@ class TestTransportBelt:
         with draftsman.validators.set_mode(ValidationMode.DISABLED):
             belt.circuit_enabled = "incorrect"
             assert belt.circuit_enabled == "incorrect"
-            assert belt.to_dict() == {
+            assert belt.to_dict(version=(2, 1)) == {
                 "name": "transport-belt",
                 "position": {"x": 0.5, "y": 0.5},
                 "control_behavior": {"circuit_enabled": "incorrect"},
@@ -222,7 +228,8 @@ class TestTransportBelt:
                     "circuit_contents_read_mode": BeltReadMode.HOLD,
                 },
                 "tags": {"some": "stuff"},
-            }
+            },
+            version=(2, 1),
         )
 
         assert belt1.mergable_with(belt1)
@@ -258,7 +265,8 @@ class TestTransportBelt:
                     "circuit_contents_read_mode": BeltReadMode.HOLD,
                 },
                 "tags": {"some": "stuff"},
-            }
+            },
+            version=(2, 1),
         )
 
         print(belt2)
@@ -268,8 +276,8 @@ class TestTransportBelt:
 
         print(belt1.to_dict(exclude_defaults=False))
 
-        assert belt1.to_dict()["name"] == "fast-transport-belt"
-        assert belt1.to_dict()["control_behavior"] == {
+        assert belt1.to_dict(version=(2, 1))["name"] == "fast-transport-belt"
+        assert belt1.to_dict(version=(2, 1))["control_behavior"] == {
             "circuit_enabled": True,
             "circuit_condition": {
                 "first_signal": {"name": "signal-blue", "type": "virtual"},

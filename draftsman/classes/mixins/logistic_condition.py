@@ -1,6 +1,6 @@
 # logistic_condition.py
 
-from draftsman.classes.exportable import Exportable
+from draftsman.classes.mixins.base_condition import BaseConditionMixin
 from draftsman.serialization import draftsman_converters
 from draftsman import signatures
 from draftsman.validators import instance_of
@@ -10,7 +10,7 @@ from typing import Union
 
 
 @attrs.define(slots=False)
-class LogisticConditionMixin(Exportable):
+class LogisticConditionMixin(BaseConditionMixin):
     """
     Allows the Entity to have an logistic enable condition, such as when the
     amount of some item in the logistic network exceeds some constant.

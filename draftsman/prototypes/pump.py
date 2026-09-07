@@ -4,7 +4,7 @@ from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     LogisticConditionMixin,
     CircuitConditionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     DirectionalMixin,
@@ -19,7 +19,7 @@ import attrs
 class Pump(
     LogisticConditionMixin,
     CircuitConditionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     DirectionalMixin,

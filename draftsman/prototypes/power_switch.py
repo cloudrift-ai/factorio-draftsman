@@ -4,7 +4,7 @@ from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     LogisticConditionMixin,
     CircuitConditionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     PowerConnectableMixin,
 )
@@ -21,7 +21,7 @@ import attrs
 class PowerSwitch(
     LogisticConditionMixin,
     CircuitConditionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     PowerConnectableMixin,
     Entity,
@@ -80,7 +80,18 @@ class PowerSwitch(
     __hash__ = Entity.__hash__
 
 
-draftsman_converters.add_hook_fns(
+draftsman_converters.get_version((1, 0)).add_hook_fns(
+    PowerSwitch,
+    lambda fields: {"switch_state": fields.switch_state.name},
+    subclasses_to_ignore=[PowerConnectableMixin],
+)
+
+draftsman_converters.get_version((2, 0)).add_hook_fns(
+    PowerSwitch,
+    lambda fields: {"switch_state": fields.switch_state.name},
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     PowerSwitch,
     lambda fields: {"switch_state": fields.switch_state.name},
 )

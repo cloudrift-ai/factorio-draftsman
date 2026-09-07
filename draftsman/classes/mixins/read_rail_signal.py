@@ -92,7 +92,16 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
     ReadRailSignalMixin,
     lambda fields: {
         ("control_behavior", "red_output_signal"): fields.red_output_signal.name,
-        ("control_behavior", "yellow_output_signal"): fields.yellow_output_signal.name,
+        ("control_behavior", "orange_output_signal"): fields.yellow_output_signal.name,
+        ("control_behavior", "green_output_signal"): fields.green_output_signal.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    ReadRailSignalMixin,
+    lambda fields: {
+        ("control_behavior", "red_output_signal"): fields.red_output_signal.name,
+        ("control_behavior", "orange_output_signal"): fields.yellow_output_signal.name,
         ("control_behavior", "green_output_signal"): fields.green_output_signal.name,
     },
 )

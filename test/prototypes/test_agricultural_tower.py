@@ -19,6 +19,8 @@ def valid_agricultural_tower():
         id="test",
         quality="uncommon",
         tile_position=(1, 1),
+        input_networks={"red"},
+        output_networks={"green"},
         circuit_condition=Condition(
             first_signal="signal-A", comparator="<", second_signal="signal-B"
         ),

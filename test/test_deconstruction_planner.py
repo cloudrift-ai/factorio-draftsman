@@ -74,11 +74,16 @@ class TestDeconstructionPlannerTesting:
         # broken_planner.description = "an actual string"
         # broken_planner.validate().reissue_all()  # No errors or warnings
 
-    def test_entity_filter_count(self):
-        assert DeconstructionPlanner().entity_filter_count == 30
-
-    def test_tile_filter_count(self):
-        assert DeconstructionPlanner().tile_filter_count == 30
+    def test_filter_counts(self):
+        """
+        Prior to Factorio 2.0, Deconstruction planners only had 30 available
+        slots for specifying entities or tiles. This restriction is removed in
+        later versions, so we return UINT32_MAX as a sentinel instead.
+        """
+        dp = DeconstructionPlanner()
+        expected = 30 if mods.versions["base"] < (2, 1) else 2**32
+        assert dp.entity_filter_count == expected
+        assert dp.tile_filter_count == expected
 
     def test_set_icons(self):
         decon_planner = DeconstructionPlanner()

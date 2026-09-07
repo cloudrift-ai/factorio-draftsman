@@ -4,7 +4,6 @@ from draftsman.classes.entity import Entity
 from draftsman.classes.exportable import Exportable
 from draftsman.classes.mixins import (
     PlayerDescriptionMixin,
-    ControlBehaviorMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
 )
@@ -21,7 +20,6 @@ from typing import Optional
 @attrs.define
 class DisplayPanel(
     PlayerDescriptionMixin,
-    ControlBehaviorMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
     Entity,

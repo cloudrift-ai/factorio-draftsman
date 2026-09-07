@@ -153,7 +153,6 @@ class RecipeMixin(Exportable):
     def merge(self, other: "RecipeMixin"):
         self.recipe = other.recipe
         self.recipe_quality = other.recipe_quality
-
         super().merge(other)
 
 
@@ -170,6 +169,14 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
 )
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
+    RecipeMixin,
+    lambda fields: {
+        "recipe": fields.recipe.name,
+        "recipe_quality": fields.recipe_quality.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     RecipeMixin,
     lambda fields: {
         "recipe": fields.recipe.name,

@@ -5,7 +5,7 @@ from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     ReadRailSignalMixin,
     CircuitConditionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
 )
@@ -23,7 +23,7 @@ from typing import Optional
 class RailSignal(
     ReadRailSignalMixin,
     CircuitConditionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
     Entity,

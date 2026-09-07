@@ -4,7 +4,7 @@ from draftsman import DEFAULT_FACTORIO_VERSION
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     PlayerDescriptionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
 )
@@ -23,7 +23,7 @@ from typing import Optional
 @attrs.define
 class ConstantCombinator(
     PlayerDescriptionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
     Entity,

@@ -10,7 +10,7 @@ from draftsman.classes.mixins import (
     CircuitConditionMixin,
     LogisticConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     DirectionalMixin,
@@ -36,7 +36,7 @@ class Inserter(
     CircuitConditionMixin,
     LogisticConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     DirectionalMixin,
@@ -239,9 +239,34 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
         "filter_mode": fields.filter_mode.name,
         None: fields.spoil_priority.name,
     },
+    subclasses_to_ignore=[CircuitEnableMixin],
 )
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
+    Inserter,
+    lambda fields: {
+        ("control_behavior", "circuit_set_filters"): fields.circuit_set_filters.name,
+        "pickup_position": fields.pickup_position_offset.name,
+        "drop_position": fields.drop_position_offset.name,
+        "filter_mode": fields.filter_mode.name,
+        "spoil_priority": fields.spoil_priority.name,
+    },
+    lambda fields, _: {
+        ("control_behavior", "circuit_set_filters"): fields.circuit_set_filters.name,
+        "pickup_position": (
+            _export_fields.pickup_position_offset,
+            lambda inst: [inst.pickup_position_offset.x, inst.pickup_position_offset.y],
+        ),
+        "drop_position": (
+            _export_fields.drop_position_offset,
+            lambda inst: [inst.drop_position_offset.x, inst.drop_position_offset.y],
+        ),
+        "filter_mode": fields.filter_mode.name,
+        "spoil_priority": fields.spoil_priority.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     Inserter,
     lambda fields: {
         ("control_behavior", "circuit_set_filters"): fields.circuit_set_filters.name,

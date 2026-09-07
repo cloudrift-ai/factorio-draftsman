@@ -663,6 +663,75 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
     },
 )
 
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    Blueprint,
+    lambda fields, converter: {
+        ("blueprint", "item"): fields.item.name,
+        ("blueprint", "label"): fields.label.name,
+        ("blueprint", "label_color"): fields.label_color.name,
+        ("blueprint", "description"): fields.description.name,
+        ("blueprint", "icons"): fields.icons.name,
+        ("blueprint", "version"): fields.version.name,
+        ("blueprint", "snap-to-grid"): fields.snapping_grid_size.name,
+        ("blueprint", "absolute-snapping"): fields.absolute_snapping.name,
+        (
+            "blueprint",
+            "position-relative-to-grid",
+        ): fields.position_relative_to_grid.name,
+        ("blueprint", "entities"): (  # Custom structure function
+            fields.entities,
+            lambda value, _, inst, args: EntityList(
+                inst,
+                [
+                    converter.structure(
+                        elem,
+                        get_entity_class(
+                            migrate_name(
+                                elem["name"],
+                                source_version=(2, 0),
+                                dest_version=mods.versions.get(
+                                    "base", DEFAULT_FACTORIO_VERSION
+                                ),
+                            )
+                        ),
+                    )
+                    for elem in value
+                ],
+            ),
+        ),
+        ("blueprint", "tiles"): fields.tiles.name,
+        ("blueprint", "wires"): fields.wires.name,
+        ("blueprint", "parameters"): fields.parameters.name,
+        ("blueprint", "schedules"): fields.schedules.name,
+        ("blueprint", "stock_connections"): fields.stock_connections.name,
+    },
+    lambda fields, converter: {
+        ("blueprint", "item"): fields.item.name,
+        ("blueprint", "label"): fields.label.name,
+        ("blueprint", "label_color"): fields.label_color.name,
+        ("blueprint", "description"): fields.description.name,
+        ("blueprint", "icons"): fields.icons.name,
+        ("blueprint", "version"): fields.version.name,
+        ("blueprint", "snap-to-grid"): fields.snapping_grid_size.name,
+        ("blueprint", "absolute-snapping"): fields.absolute_snapping.name,
+        (
+            "blueprint",
+            "position-relative-to-grid",
+        ): fields.position_relative_to_grid.name,
+        ("blueprint", "entities"): fields.entities.name,
+        ("blueprint", "tiles"): fields.tiles.name,
+        ("blueprint", "wires"): fields.wires.name,
+        ("blueprint", "parameters"): fields.parameters.name,
+        ("blueprint", "schedules"): fields.schedules.name,
+        ("blueprint", "stock_connections"): (
+            fields.stock_connections,
+            lambda inst: [
+                converter.unstructure(elem) for elem in flatten_stock_connections(inst)
+            ],
+        ),
+    },
+)
+
 
 # def structure_blueprint_2_0_factory(t: type):
 #     default_blueprint_hook = (

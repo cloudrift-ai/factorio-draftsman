@@ -114,7 +114,6 @@ class FiltersMixin(Exportable):
 
     def merge(self, other: "FiltersMixin"):
         super().merge(other)
-
         self.filters = other.filters
 
 

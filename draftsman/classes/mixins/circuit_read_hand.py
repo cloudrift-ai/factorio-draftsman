@@ -45,6 +45,11 @@ class CircuitReadHandMixin(Exportable):
     ``ReadMode.PULSE`` or ``ReadMode.HOLD``.
     """
 
+    def merge(self, other: "CircuitReadHandMixin"):
+        super().merge(other)
+        self.read_hand_contents = other.read_hand_contents
+        self.read_mode = other.read_mode
+
 
 draftsman_converters.add_hook_fns(
     CircuitReadHandMixin,

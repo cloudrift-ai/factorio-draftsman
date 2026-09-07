@@ -42,6 +42,11 @@ class CircuitReadResourceMixin(Exportable):
     The mode in which the resources underneath the Entity should be read.
     """
 
+    def merge(self, other: "CircuitReadResourceMixin"):
+        super().merge(other)
+        self.read_resources = other.read_resources
+        self.read_mode = other.read_mode
+
 
 draftsman_converters.add_hook_fns(
     CircuitReadResourceMixin,

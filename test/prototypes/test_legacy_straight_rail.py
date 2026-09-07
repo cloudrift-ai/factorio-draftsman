@@ -34,6 +34,11 @@ class TestLegacyStraightRail:
             "position": {"x": 1, "y": 1},
             "direction": Direction.NORTHWEST,
         }
+        assert straight_rail.to_dict(version=(2, 1)) == {
+            "name": "legacy-straight-rail",
+            "position": {"x": 1, "y": 1},
+            "direction": Direction.NORTHWEST,
+        }
 
         with pytest.warns(UnknownEntityWarning):
             LegacyStraightRail("unknown legacy straight rail")

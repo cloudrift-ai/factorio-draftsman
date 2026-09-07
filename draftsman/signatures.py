@@ -190,7 +190,7 @@ class SignalID(Exportable):
         >>> SignalID("who knows!")
         %%%: UnknownSignalWarning: Unknown signal 'who knows!'; did you mean 'space-location-unknown'?
         ...
-        SignalID(name='who knows!', type='item', quality='normal')
+        SignalID(name='who knows!', type='item', quality='normal', comparator='=')
     """
 
     name: Optional[SignalIDName] = attrs.field(
@@ -276,6 +276,15 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
 )
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
+    SignalID,
+    lambda fields: {
+        "name": fields.name.name,
+        "type": fields.type.name,
+        "quality": fields.quality.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     SignalID,
     lambda fields: {
         "name": fields.name.name,
@@ -708,6 +717,16 @@ class SignalFilter(Exportable):
     .. versionadded:: 3.0.0 (Factorio 2.0)
     """
 
+    import_from: Optional[str] = attrs.field(  # must be a planet name
+        default=None,
+        validator=instance_of(Optional[str]),
+    )
+    """
+    The surface this particular item is being requested from.
+
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+    """
+
     # Deprecated in 2.0
     # @field_validator("index")
     # @classmethod
@@ -812,6 +831,30 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
         "quality": fields.quality.name,
         "comparator": fields.comparator.name,
         "max_count": fields.max_count.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    SignalFilter,
+    lambda fields: {
+        "index": fields.index.name,
+        "name": fields.name.name,
+        "count": fields.count.name,
+        "type": fields.type.name,
+        "quality": fields.quality.name,
+        "comparator": fields.comparator.name,
+        "max_count": fields.max_count.name,
+        "import_from": fields.import_from.name,
+    },
+    lambda fields, converter: {
+        "index": fields.index.name,
+        "name": fields.name.name,
+        "count": fields.count.name,
+        "type": attrs.fields(_ExportSignalFilter).type,
+        "quality": fields.quality.name,
+        "comparator": fields.comparator.name,
+        "max_count": fields.max_count.name,
+        "import_from": fields.import_from.name,
     },
 )
 

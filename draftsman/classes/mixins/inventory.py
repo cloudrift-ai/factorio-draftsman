@@ -129,7 +129,6 @@ class InventoryMixin(Exportable):
 
     def merge(self, other: "Entity"):
         super().merge(other)
-
         self.bar = other.bar
 
 

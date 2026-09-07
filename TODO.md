@@ -1,15 +1,7 @@
 # TODO
 
-### Add `draftsman update` testing
-So that regressions are unlikely. Can likely settle for the most common mods/modpacks, probably tested via workflows
-
----
-### Rewrite `draftsman update` Lua interface
-Likely can be massively cleaned up and simplified
-
----
-### Add a `CONTRIBUTING.md`
-Most information is already in the readme, just leaving out more niche guidelines
+### Fix `draftsman update` testing
+Framework is in place, but certain modpacks break due to bugs in either the mod dependency downloading or due to using a slightly wrong Lua version
 
 ---
 ### Remove all old typing constructs (`Union`, `List`, etc.) now that minimum Python version > 3.9
@@ -17,14 +9,11 @@ Most information is already in the readme, just leaving out more niche guideline
 ---
 ### Make the delineation between train schedule/space platform conditions/interrupts larger, as they're not all interchangeable
 Right now we just have `WaitCondition` and `WaitConditionType` which is used for everything, but this doesn't guard against a user trying to use the wrong conditions in the wrong circumstance
+The schemas make this distinction, but Draftsman does not
 
 ---
 ### Validation caching
 Ideally, whether or not a entity or blueprint is considered valid can be retained as long as the entity does not change after validation. For example, if you validate a single entity, and then add that entity to a blueprint 1000 times, you only have to validate the attributes of the blueprint itself, since the entities are guaranteed to already be in a valid state. Ideally, each exportable object would have a `is_valid` attribute which would be set to false when an attribute is set, which can then be quickly checked in any parent `validate()` function.
-
----
-### Integrate with `ruff`
-Mostly done already, just need to add rules to add more strictness
 
 ---
 ### Revamp the `add_x` data functions so that they support more features
