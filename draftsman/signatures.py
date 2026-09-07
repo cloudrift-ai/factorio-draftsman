@@ -190,7 +190,7 @@ class SignalID(Exportable):
         >>> SignalID("who knows!")
         %%%: UnknownSignalWarning: Unknown signal 'who knows!'; did you mean 'space-location-unknown'?
         ...
-        SignalID(name='who knows!', type='item', quality='normal')
+        SignalID(name='who knows!', type='item', quality='normal', comparator='=')
     """
 
     name: Optional[SignalIDName] = attrs.field(
