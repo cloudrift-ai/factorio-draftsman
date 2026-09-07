@@ -7,16 +7,15 @@ from draftsman.classes.mixins import (
     ModulesMixin,
     CraftingMachineMixin,
     LogisticConditionMixin,
-    CircuitSplitOutputMixin,
-    CircuitSplitInputMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     RecipeMixin,
     EnergySourceMixin,
     DirectionalMixin,
 )
+from draftsman.serialization import draftsman_converters
 from draftsman.signatures import QualityID
 
 from draftsman.data.entities import assembling_machines
@@ -32,11 +31,9 @@ class AssemblingMachine(
     ModulesMixin,
     CraftingMachineMixin,
     LogisticConditionMixin,
-    CircuitSplitOutputMixin,
-    CircuitSplitInputMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     RecipeMixin,
     EnergySourceMixin,
@@ -99,3 +96,19 @@ class AssemblingMachine(
     # =========================================================================
 
     __hash__ = Entity.__hash__
+
+
+draftsman_converters.get_version((1, 0)).add_hook_fns(
+    AssemblingMachine,
+    lambda fields: {},
+    subclasses_to_ignore=[
+        CircuitConnectableMixin,
+        CircuitEnableMixin,
+        CircuitConditionMixin,
+        LogisticConditionMixin,
+    ],
+)
+
+draftsman_converters.get_version((2, 0)).add_hook_fns(
+    AssemblingMachine, lambda fields: {}
+)

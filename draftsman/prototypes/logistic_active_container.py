@@ -3,7 +3,7 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     CircuitConditionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     InventoryMixin,
 )
@@ -21,7 +21,7 @@ class LogisticActiveContainer(
     InventoryMixin,
     # LogisticModeOfOperationMixin,
     CircuitConditionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     Entity,
 ):
@@ -83,6 +83,7 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
             lambda _: LogisticModeOfOperation.SEND_CONTENTS,  # Always return SEND_CONTENTS
         )
     },
+    subclasses_to_ignore=[CircuitConditionMixin],
 )
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(

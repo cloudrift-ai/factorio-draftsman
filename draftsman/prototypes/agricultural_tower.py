@@ -5,7 +5,7 @@ from draftsman.classes.mixins import (
     CircuitConditionMixin,
     CircuitEnableMixin,
     LogisticConditionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
 )
@@ -24,7 +24,7 @@ class AgriculturalTower(
     LogisticConditionMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     Entity,

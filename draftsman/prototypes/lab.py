@@ -3,8 +3,6 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     ModulesMixin,
-    CircuitSplitOutputMixin,
-    CircuitSplitInputMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
 )
@@ -23,8 +21,6 @@ from typing import Iterable, Optional
 @attrs.define
 class Lab(
     ModulesMixin,
-    CircuitSplitOutputMixin,
-    CircuitSplitInputMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     Entity,

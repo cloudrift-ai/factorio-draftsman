@@ -123,10 +123,20 @@ class CraftingMachineMixin(Exportable):
     .. versionadded:: 3.0.0 (Factorio 2.0)
     """
 
+    def merge(self, other: "CraftingMachineMixin"):
+        super().merge(other)
+        self.circuit_set_recipe = other.circuit_set_recipe
+        self.read_contents = other.read_contents
+        self.include_in_crafting = other.include_in_crafting
+        self.read_recipe_finished = other.read_recipe_finished
+        self.recipe_finished_signal = other.recipe_finished_signal
+        self.read_working = other.read_working
+        self.working_signal = other.working_signal
 
-draftsman_converters.get_version((1, 0)).add_hook_fns(
-    CraftingMachineMixin, lambda fields: {}
-)
+
+# draftsman_converters.get_version((1, 0)).add_hook_fns(
+#     CraftingMachineMixin, lambda fields: {}
+# )
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
     CraftingMachineMixin,

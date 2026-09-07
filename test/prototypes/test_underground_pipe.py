@@ -37,12 +37,11 @@ class TestUndergroundPipe:
             pipe = UndergroundPipe("this is not an underground pipe")
 
     def test_power_and_circuit_flags(self):
-        circ_connectable = False if mods.versions["base"] < (2, 1) else True
         for name in underground_pipes:
             underground_belt = UndergroundPipe(name)
             assert underground_belt.power_connectable == False
             assert underground_belt.dual_power_connectable == False
-            assert underground_belt.circuit_connectable == circ_connectable
+            assert underground_belt.circuit_connectable == True
             assert underground_belt.dual_circuit_connectable == False
 
     def test_mergable_with(self):

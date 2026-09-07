@@ -153,7 +153,6 @@ class RecipeMixin(Exportable):
     def merge(self, other: "RecipeMixin"):
         self.recipe = other.recipe
         self.recipe_quality = other.recipe_quality
-
         super().merge(other)
 
 

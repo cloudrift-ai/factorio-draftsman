@@ -115,7 +115,6 @@ class TestActiveContainer:
             },
             "connections": {},
             "control_behavior": {
-                "circuit_condition": {"comparator": "<", "constant": 0},
                 "circuit_mode_of_operation": LogisticModeOfOperation.SEND_CONTENTS,
             },
             "tags": {},
@@ -133,7 +132,6 @@ class TestActiveContainer:
             },
             "connections": {},
             "control_behavior": {
-                "circuit_condition": {"comparator": "<", "constant": 0},
                 "circuit_mode_of_operation": LogisticModeOfOperation.SEND_CONTENTS,
             },
             "tags": {},

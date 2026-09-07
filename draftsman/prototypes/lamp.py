@@ -6,7 +6,7 @@ from draftsman.classes.mixins import (
     LogisticConditionMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
 )
@@ -30,7 +30,7 @@ class Lamp(
     LogisticConditionMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     Entity,
@@ -205,6 +205,7 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
         # None: fields.always_on.name,
         "color": fields.color.name,
     },
+    subclasses_to_ignore=[CircuitEnableMixin],
 )
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(

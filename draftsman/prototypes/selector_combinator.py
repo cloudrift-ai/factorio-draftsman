@@ -3,7 +3,6 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     PlayerDescriptionMixin,
-    ControlBehaviorMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     DirectionalMixin,
@@ -44,7 +43,6 @@ SelectorOperations = Literal[
 @attrs.define
 class SelectorCombinator(
     PlayerDescriptionMixin,
-    ControlBehaviorMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     DirectionalMixin,
@@ -287,6 +285,57 @@ class SelectorCombinator(
             warnings.warn(PureVirtualDisallowedWarning(msg))
 
     # =========================================================================
+    # Mode: "time"
+    # =========================================================================
+
+    game_tick_signal: Optional[SignalID] = attrs.field(
+        factory=lambda: SignalID(name="signal-T", type="virtual"),
+        converter=SignalID.converter,
+        validator=instance_of(Optional[SignalID]),
+    )
+    """
+    .. serialized::
+    
+        This attribute is imported/exported from blueprint strings.
+
+    The signal to emit the current game tick value of the save.
+        
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+    """
+
+    day_tick_signal: Optional[SignalID] = attrs.field(
+        factory=lambda: SignalID(name="signal-D", type="virtual"),
+        converter=SignalID.converter,
+        validator=instance_of(Optional[SignalID]),
+    )
+    """
+    .. serialized::
+    
+        This attribute is imported/exported from blueprint strings.
+
+    The signal to emit the current day tick value on this surface.
+        
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+    """
+
+    day_length_signal: Optional[SignalID] = attrs.field(
+        factory=lambda: SignalID(name="signal-L", type="virtual"),
+        converter=SignalID.converter,
+        validator=instance_of(Optional[SignalID]),
+    )
+    """
+    .. serialized::
+    
+        This attribute is imported/exported from blueprint strings.
+
+    The signal to emit the count of ticks per day/night cycle of this surface.
+    Can be used in tandem with :py:attr:`.day_tick_signal` in order to create
+    surface-aware local clocks.
+        
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+    """
+
+    # =========================================================================
 
     def set_mode_select(
         self,
@@ -385,6 +434,28 @@ class SelectorCombinator(
         self.quality_source_signal = source_signal
         self.quality_destination_signal = destination_signal
 
+    def set_mode_time(
+        self,
+        game_tick_signal: Optional[SignalID] = None,
+        day_tick_signal: Optional[SignalID] = None,
+        day_length_signal: Optional[SignalID] = None,
+    ):
+        """
+        Sets the selector combintor to "Quality Transfer" mode, along with
+        associated parameters.
+
+        :param game_tick_signal: The signal to emit the current game tick value.
+        :param day_tick_signal: The signal to emit the current day tick value.
+        :param day_length_signal: The signal to emit the length of the day on
+            this surface.
+
+        .. versionadded:: 4.0.0 (Factorio 2.1)
+        """
+        self.operation = "time"
+        self.game_tick_signal = game_tick_signal
+        self.day_tick_signal = day_tick_signal
+        self.day_length_signal = day_length_signal
+
     def wipe_settings(self):
         """
         Resets all of the control behavior settings of this combinator to their
@@ -412,7 +483,9 @@ class SelectorCombinator(
     __hash__ = Entity.__hash__
 
 
-draftsman_converters.add_hook_fns(
+# TODO: only output 'time' mode parameters if factorio version >= 2.1
+
+draftsman_converters.get_version((2, 0)).add_hook_fns(
     SelectorCombinator,
     lambda fields: {
         ("control_behavior", "operation"): fields.operation.name,
@@ -441,5 +514,40 @@ draftsman_converters.add_hook_fns(
             "control_behavior",
             "quality_destination_signal",
         ): fields.quality_destination_signal.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    SelectorCombinator,
+    lambda fields: {
+        ("control_behavior", "operation"): fields.operation.name,
+        ("control_behavior", "select_max"): fields.select_max.name,
+        ("control_behavior", "index_constant"): fields.index_constant.name,
+        ("control_behavior", "index_signal"): fields.index_signal.name,
+        ("control_behavior", "count_signal"): fields.count_signal.name,
+        (
+            "control_behavior",
+            "random_update_interval",
+        ): fields.random_update_interval.name,
+        ("control_behavior", "quality_filter"): fields.quality_filter.name,
+        (
+            "control_behavior",
+            "select_quality_from_signal",
+        ): fields.select_quality_from_signal.name,
+        (
+            "control_behavior",
+            "quality_source_static",
+        ): fields.quality_source_static.name,
+        (
+            "control_behavior",
+            "quality_source_signal",
+        ): fields.quality_source_signal.name,
+        (
+            "control_behavior",
+            "quality_destination_signal",
+        ): fields.quality_destination_signal.name,
+        ("control_behavior", "game_tick_signal"): fields.game_tick_signal.name,
+        ("control_behavior", "day_tick_signal"): fields.day_tick_signal.name,
+        ("control_behavior", "day_length_signal"): fields.day_length_signal.name,
     },
 )

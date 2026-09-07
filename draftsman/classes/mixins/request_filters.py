@@ -120,7 +120,6 @@ class RequestFiltersMixin(Exportable):
 
     def merge(self, other: "RequestFiltersMixin"):
         super().merge(other)
-
         self.sections = other.sections
 
 

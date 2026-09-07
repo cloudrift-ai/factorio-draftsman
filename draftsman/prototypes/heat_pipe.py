@@ -3,7 +3,7 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     CircuitReadTemperatureMixin,
-    CircuitSplitOutputMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
 )
 
@@ -15,7 +15,7 @@ import attrs
 @attrs.define
 class HeatPipe(
     CircuitReadTemperatureMixin,
-    CircuitSplitOutputMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     Entity,
 ):

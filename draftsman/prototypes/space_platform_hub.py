@@ -3,7 +3,7 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     RequestFiltersMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
 )
 from draftsman.serialization import draftsman_converters
@@ -19,7 +19,7 @@ from typing import Optional
 
 @attrs.define
 class SpacePlatformHub(
-    RequestFiltersMixin, ControlBehaviorMixin, CircuitConnectableMixin, Entity
+    RequestFiltersMixin, CircuitSplitIOMixin, CircuitConnectableMixin, Entity
 ):
     """
     .. versionadded:: 3.0.0 (Factorio 2.0)
@@ -140,7 +140,22 @@ class SpacePlatformHub(
     __hash__ = Entity.__hash__
 
 
-draftsman_converters.add_hook_fns(
+draftsman_converters.get_version((2, 0)).add_hook_fns(
+    SpacePlatformHub,
+    lambda fields: {
+        ("control_behavior", "read_contents"): fields.read_contents.name,
+        ("control_behavior", "send_to_platform"): fields.send_to_platform.name,
+        ("control_behavior", "read_moving_from"): fields.read_moving_from.name,
+        ("control_behavior", "read_moving_to"): fields.read_moving_to.name,
+        ("control_behavior", "read_speed"): fields.read_speed.name,
+        ("control_behavior", "speed_signal"): fields.speed_signal.name,
+        ("control_behavior", "read_damage_taken"): fields.read_damage_taken.name,
+        ("control_behavior", "damage_taken_signal"): fields.damage_taken_signal.name,
+        "request_missing_construction_materials": fields.request_missing_construction_materials.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     SpacePlatformHub,
     lambda fields: {
         ("control_behavior", "set_requests"): fields.set_requests.name,

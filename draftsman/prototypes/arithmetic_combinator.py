@@ -3,7 +3,7 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     PlayerDescriptionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     DirectionalMixin,
@@ -65,7 +65,7 @@ def _ensure_proper_each_configuration(
 @attrs.define
 class ArithmeticCombinator(
     PlayerDescriptionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     DirectionalMixin,
@@ -404,7 +404,7 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
         (
             "control_behavior",
             "arithmetic_conditions",
-            "second_signal_signal",
+            "second_signal",
         ): (
             _export_fields.second_signal,
             lambda inst: (
@@ -423,8 +423,9 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
 )
 
 
-def struct_2_X(fields):
-    return {
+draftsman_converters.get_version((2, 0)).add_hook_fns(
+    ArithmeticCombinator,
+    lambda fields: {
         (
             "control_behavior",
             "arithmetic_conditions",
@@ -481,11 +482,8 @@ def struct_2_X(fields):
             "arithmetic_conditions",
             "output_signal",
         ): fields.output_signal.name,
-    }
-
-
-def unstruct_2_X(fields, converter):
-    return {
+    },
+    lambda fields, converter: {
         (
             "control_behavior",
             "arithmetic_conditions",
@@ -554,16 +552,5 @@ def unstruct_2_X(fields, converter):
             "arithmetic_conditions",
             "output_signal",
         ): fields.output_signal.name,
-    }
-
-
-draftsman_converters.get_version((2, 0)).add_hook_fns(
-    ArithmeticCombinator,
-    struct_2_X,
-    unstruct_2_X,
-)
-draftsman_converters.get_version((2, 1)).add_hook_fns(
-    ArithmeticCombinator,
-    struct_2_X,
-    unstruct_2_X,
+    },
 )

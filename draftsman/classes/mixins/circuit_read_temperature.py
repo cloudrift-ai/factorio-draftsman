@@ -47,6 +47,11 @@ class CircuitReadTemperatureMixin(Exportable):
     .. versionadded 4.0.0 (Factorio 2.1)
     """
 
+    def merge(self, other: "CircuitReadTemperatureMixin"):
+        super().merge(other)
+        self.read_temperature = other.read_temperature
+        self.temperature_signal = other.temperature_signal
+
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
     CircuitReadTemperatureMixin,

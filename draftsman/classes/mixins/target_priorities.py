@@ -144,6 +144,14 @@ class TargetPrioritiesMixin(Exportable):
             second_operand,
         )
 
+    def merge(self, other: "TargetPrioritiesMixin"):
+        super().merge(other)
+        self.priority_list = other.priority_list
+        self.ignore_unprioritized = other.ignore_unprioritized
+        self.set_priority_list = other.set_priority_list
+        self.set_ignore_unprioritized = other.set_ignore_unprioritized
+        self.ignore_unlisted_targets_condition = other.ignore_unlisted_targets_condition
+
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
     TargetPrioritiesMixin,

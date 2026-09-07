@@ -2,7 +2,7 @@
 
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
-    CircuitSplitOutputMixin,
+    CircuitSplitIOMixin,
     CircuitReadPipeMixin,
     CircuitConnectableMixin,
     CircuitReadTemperatureMixin,
@@ -18,7 +18,7 @@ import attrs
 class StorageTank(
     CircuitReadTemperatureMixin,
     CircuitReadPipeMixin,
-    CircuitSplitOutputMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
     Entity,

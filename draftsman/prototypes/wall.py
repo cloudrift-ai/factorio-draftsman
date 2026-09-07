@@ -3,7 +3,7 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     CircuitConditionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
 )
@@ -20,7 +20,7 @@ from typing import Optional
 @attrs.define
 class Wall(
     CircuitConditionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
     Entity,

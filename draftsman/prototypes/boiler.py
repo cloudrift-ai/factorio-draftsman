@@ -6,11 +6,10 @@ from draftsman.classes.mixins import (
     LogisticConditionMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
-    CircuitSplitOutputMixin,
-    CircuitSplitInputMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
 )
+from draftsman.serialization import draftsman_converters
 from draftsman.validators import instance_of
 
 from draftsman.data.entities import boilers
@@ -25,8 +24,6 @@ class Boiler(
     LogisticConditionMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
-    CircuitSplitOutputMixin,
-    CircuitSplitInputMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
     Entity,
@@ -61,3 +58,11 @@ class Boiler(
     # =========================================================================
 
     __hash__ = Entity.__hash__
+
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    Boiler,
+    lambda fields: {
+        ("control_behavior", "read_fuel"): fields.read_fuel.name,
+    },
+)

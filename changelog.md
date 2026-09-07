@@ -5,7 +5,8 @@
 * Updated `factorio-data` to version `2.1.17` (latest)
 * Updated `defines.lua` to version `2.1.17` (latest)
 * Added `(2, 1)` version import/export target
-* All entities that have split input/output selectable wires are implemented via `CircuitSplitInputMixin` and `CircuitSplitOutputMixin`
+* All entities that have split input/output selectable wires now have the `input_networks` and `output_networks` attributes
+    * Repurposed `ControlBehaviorMixin` into `CircuitSplitIOMixin`
 * All pipe types (`Pipe`, `UndergroundPipe`, `StorageTank`): 
     * Circuit connectable
     * `read_mode` determines how the fluid contents of the pipe/pipeline is broadcast
@@ -31,6 +32,7 @@
     * Added `set_requests`, `provide_to_other_platforms`
 * Fixed #223 (Leaking debug log)
 * Fixed a bug in `examples/entities/decider_combinator.py`
+* Fixed tests that were too permissive when checking against each version's JSON schemas
 
 ## 3.3.1
 * Updated `factorio-data` to version `2.0.77` (latest)

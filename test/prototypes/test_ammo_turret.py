@@ -24,6 +24,8 @@ def valid_ammo_turret():
         quality="uncommon",
         tile_position=(1, 1),
         direction=Direction.EAST,
+        input_networks={"red"},
+        output_networks={"green"},
         circuit_enabled=True,
         circuit_condition=Condition(
             first_signal="signal-A", comparator="<", second_signal="signal-B"

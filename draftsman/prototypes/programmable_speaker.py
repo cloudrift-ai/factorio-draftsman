@@ -3,9 +3,7 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     CircuitConditionMixin,
-    ControlBehaviorMixin,
     CircuitConnectableMixin,
-    CircuitEnableMixin,
     EnergySourceMixin,
 )
 from draftsman.constants import ValidationMode
@@ -32,8 +30,6 @@ import warnings
 @attrs.define
 class ProgrammableSpeaker(
     CircuitConditionMixin,
-    CircuitEnableMixin,
-    ControlBehaviorMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     Entity,

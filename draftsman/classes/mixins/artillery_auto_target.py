@@ -24,6 +24,11 @@ class ArtilleryAutoTargetMixin(Exportable):
     structures within range.
     """
 
+    def merge(self, other: "ArtilleryAutoTargetMixin"):
+        super().merge(other)
+
+        self.auto_target = other.auto_target
+
 
 draftsman_converters.add_hook_fns(
     ArtilleryAutoTargetMixin,

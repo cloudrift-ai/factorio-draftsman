@@ -2,7 +2,7 @@
 
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitReadTemperatureMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
@@ -17,7 +17,7 @@ import attrs
 
 @attrs.define
 class Reactor(
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitReadTemperatureMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
@@ -45,6 +45,10 @@ class Reactor(
 
 
 # TODO: need to figure out a way to make 1.0 hook not be circuit connectable
+
+draftsman_converters.get_version((1, 0)).add_hook_fns(
+    Reactor, lambda fields: {}, subclasses_to_ignore=[CircuitConnectableMixin]
+)
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
     Reactor,

@@ -4,7 +4,7 @@ from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     CircuitReadTemperatureMixin,
     CircuitReadPipeMixin,
-    CircuitSplitOutputMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
 )
 
@@ -17,7 +17,7 @@ import attrs
 class Pipe(
     CircuitReadTemperatureMixin,
     CircuitReadPipeMixin,
-    CircuitSplitOutputMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     Entity,
 ):

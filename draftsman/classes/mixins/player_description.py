@@ -33,6 +33,10 @@ class PlayerDescriptionMixin(Exportable):
     .. versionadded:: 3.0.0 (Factorio 2.0)
     """
 
+    def merge(self, other: "PlayerDescriptionMixin"):
+        super().merge(other)
+        self.player_description = other.player_description
+
 
 draftsman_converters.get_version((1, 0)).add_hook_fns(
     PlayerDescriptionMixin,

@@ -12,10 +12,8 @@ from draftsman.classes.mixins.circuit_read_temperature import (
     CircuitReadTemperatureMixin,
 )
 from draftsman.classes.mixins.circuit_set_filters import CircuitSetFiltersMixin
-from draftsman.classes.mixins.circuit_split_input import CircuitSplitInputMixin
-from draftsman.classes.mixins.circuit_split_output import CircuitSplitOutputMixin
 from draftsman.classes.mixins.color import ColorMixin
-from draftsman.classes.mixins.control_behavior import ControlBehaviorMixin
+from draftsman.classes.mixins.control_behavior import CircuitSplitIOMixin
 from draftsman.classes.mixins.crafting_machine import CraftingMachineMixin
 from draftsman.classes.mixins.directional import DirectionalMixin
 from draftsman.classes.mixins.energy_source import EnergySourceMixin
@@ -51,10 +49,8 @@ __all__ = [
     "CircuitReadResourceMixin",
     "CircuitReadTemperatureMixin",
     "CircuitSetFiltersMixin",
-    "CircuitSplitInputMixin",
-    "CircuitSplitOutputMixin",
     "ColorMixin",
-    "ControlBehaviorMixin",
+    "CircuitSplitIOMixin",
     "CraftingMachineMixin",
     "DirectionalMixin",
     "EnergySourceMixin",

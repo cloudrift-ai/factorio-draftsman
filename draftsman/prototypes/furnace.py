@@ -10,7 +10,7 @@ from draftsman.classes.mixins import (
     CircuitConditionMixin,
     CircuitEnableMixin,
     CircuitConnectableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     DirectionalMixin,
 )
 from draftsman.constants import InventoryType
@@ -33,7 +33,7 @@ class Furnace(
     CircuitConditionMixin,
     CircuitEnableMixin,
     CircuitConnectableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     DirectionalMixin,
     Entity,
 ):

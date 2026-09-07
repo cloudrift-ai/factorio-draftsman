@@ -31,6 +31,10 @@ class CircuitReadPipeMixin(Exportable):
     .. versionadded 4.0.0 (Factorio 2.1)
     """
 
+    def merge(self, other: "CircuitReadPipeMixin"):
+        super().merge(other)
+        self.read_mode = other.read_mode
+
 
 draftsman_converters.get_version((2, 1)).add_hook_fns(
     CircuitReadPipeMixin,
