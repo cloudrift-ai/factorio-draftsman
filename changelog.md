@@ -1,7 +1,6 @@
 # Changelog
 
 ## 4.0.0
-
 * Updated `factorio-data` to version `2.1.17` (latest)
 * Updated `defines.lua` to version `2.1.17` (latest)
 * Added `(2, 1)` version import/export target
