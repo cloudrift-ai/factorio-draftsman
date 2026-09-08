@@ -37,6 +37,11 @@ class TestLegacyCurvedRail:
             "position": {"x": 4.0, "y": 2.0},
             "direction": Direction.NORTHWEST,
         }
+        assert curved_rail.to_dict(version=(2, 1)) == {
+            "name": "legacy-curved-rail",
+            "position": {"x": 4.0, "y": 2.0},
+            "direction": Direction.NORTHWEST,
+        }
 
         # Warnings:
         # if entity is not on a grid pos / 2, then warn the user of the incoming

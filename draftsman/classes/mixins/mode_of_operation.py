@@ -40,6 +40,10 @@ class InserterModeOfOperationMixin(Exportable):
     network, defined as one of several integer "modes".
     """
 
+    def merge(self, other: "InserterModeOfOperationMixin"):
+        super().merge(other)
+        self.mode_of_operation = other.mode_of_operation
+
 
 draftsman_converters.get_version((1, 0)).add_hook_fns(
     InserterModeOfOperationMixin,
@@ -71,6 +75,10 @@ class LogisticModeOfOperationMixin(Exportable):
     The behavior that the logistic container should follow when connected to
     a circuit network.
     """
+
+    def merge(self, other: "LogisticModeOfOperationMixin"):
+        super().merge(other)
+        self.mode_of_operation = other.mode_of_operation
 
 
 draftsman_converters.add_hook_fns(

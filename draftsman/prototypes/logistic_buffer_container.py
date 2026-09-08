@@ -5,11 +5,12 @@ from draftsman.classes.mixins import (
     LogisticModeOfOperationMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     RequestFiltersMixin,
     InventoryMixin,
 )
+from draftsman.serialization import draftsman_converters
 
 from draftsman.data.entities import logistic_buffer_containers
 
@@ -22,7 +23,7 @@ class LogisticBufferContainer(
     LogisticModeOfOperationMixin,
     CircuitConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     RequestFiltersMixin,
     Entity,
@@ -38,3 +39,15 @@ class LogisticBufferContainer(
     # =========================================================================
 
     __hash__ = Entity.__hash__
+
+
+draftsman_converters.get_version((1, 0)).add_hook_fns(
+    LogisticBufferContainer,
+    lambda fields: {},
+    subclasses_to_ignore=[CircuitEnableMixin, CircuitConditionMixin],
+)
+
+draftsman_converters.get_version((2, 0)).add_hook_fns(
+    LogisticBufferContainer,
+    lambda fields: {},
+)

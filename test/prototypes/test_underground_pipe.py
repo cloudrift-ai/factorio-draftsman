@@ -4,6 +4,8 @@ from draftsman.constants import Direction
 from draftsman.entity import UndergroundPipe, Container, underground_pipes
 from draftsman.warning import UnknownEntityWarning, UnknownKeywordWarning
 
+from draftsman.data import mods
+
 from collections.abc import Hashable
 import pytest
 
@@ -39,7 +41,7 @@ class TestUndergroundPipe:
             underground_belt = UndergroundPipe(name)
             assert underground_belt.power_connectable == False
             assert underground_belt.dual_power_connectable == False
-            assert underground_belt.circuit_connectable == False
+            assert underground_belt.circuit_connectable == True
             assert underground_belt.dual_circuit_connectable == False
 
     def test_mergable_with(self):

@@ -534,8 +534,8 @@ class TestGroup:
             group.add_circuit_connection("red", "c1", "c2", "input", "wrong")
 
         with pytest.raises(EntityNotCircuitConnectableError):
-            not_circuit_connectable = Pipe(
-                "pipe", id="no error pls", tile_position=(0, 5)
+            not_circuit_connectable = Gate(
+                "gate", id="no error pls", tile_position=(0, 5)
             )
             group.entities.append(not_circuit_connectable)
             group.add_circuit_connection("red", "c1", "no error pls")

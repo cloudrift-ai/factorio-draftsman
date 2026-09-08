@@ -96,8 +96,11 @@ class TestAABB:
         assert round(abs(rotated_aabb.bot_right[0] - 0), 7) == 0
         assert round(abs(rotated_aabb.bot_right[1] - 1), 7) == 0
 
-        with pytest.raises(ValueError):
-            aabb.rotate(1)
+        rotated_rect = aabb.rotate(1)
+        assert isinstance(rotated_rect, utils.Rectangle)
+        assert rotated_rect.width == 1
+        assert rotated_rect.height == 1
+        assert rotated_rect.angle == 22.5
 
     def test_add(self):
         aabb = utils.AABB(0, 0, 1, 1)

@@ -109,6 +109,17 @@ draftsman_converters.get_version((2, 0)).add_hook_fns(
     },
 )
 
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    UpgradeMapperSource,
+    lambda fields: {
+        "type": fields.type.name,
+        "name": fields.name.name,
+        "quality": fields.quality.name,
+        "comparator": fields.comparator.name,
+        "module_filter": fields.module_filter.name,
+    },
+)
+
 
 @attrs.define
 class UpgradeMapperDestination(Exportable):
@@ -177,6 +188,17 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
 )
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
+    UpgradeMapperDestination,
+    lambda fields: {
+        "type": fields.type.name,
+        "name": fields.name.name,
+        "quality": fields.quality.name,
+        "module_limit": fields.module_limit.name,
+        "module_slots": fields.module_slots.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     UpgradeMapperDestination,
     lambda fields: {
         "type": fields.type.name,

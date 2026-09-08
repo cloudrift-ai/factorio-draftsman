@@ -14,7 +14,7 @@ From there you should be able to open an interpreter and check the version of Dr
 
 >>> import draftsman
 >>> draftsman.__version__
-'3.0.0'
+'4.0.0'
 
 If you see an output like above, then Draftsman should have installed correctly.
 

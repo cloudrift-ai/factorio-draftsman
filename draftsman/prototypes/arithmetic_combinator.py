@@ -3,7 +3,7 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     PlayerDescriptionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     DirectionalMixin,
@@ -65,7 +65,7 @@ def _ensure_proper_each_configuration(
 @attrs.define
 class ArithmeticCombinator(
     PlayerDescriptionMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     DirectionalMixin,
@@ -404,7 +404,7 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
         (
             "control_behavior",
             "arithmetic_conditions",
-            "second_signal_signal",
+            "second_signal",
         ): (
             _export_fields.second_signal,
             lambda inst: (

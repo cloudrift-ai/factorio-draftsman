@@ -38,6 +38,9 @@ def valid_selector_combinator():
         quality_source_static="uncommon",
         quality_source_signal="signal-C",
         quality_destination_signal="signal-D",
+        game_tick_signal="signal-E",
+        day_tick_signal="signal-F",
+        day_length_signal="signal-G",
         tags={"blah": "blah"},
     )
 
@@ -180,3 +183,20 @@ class TestSelectorCombinator:
 
         with pytest.warns(PureVirtualDisallowedWarning):
             selector.set_mode_quality_transfer(destination_signal="signal-everything")
+
+        selector.wipe_settings()
+        selector.set_mode_time("signal-A", "signal-B", "signal-C")
+        assert selector.operation == "time"
+        assert selector.game_tick_signal == SignalID(name="signal-A", type="virtual")
+        assert selector.day_tick_signal == SignalID(name="signal-B", type="virtual")
+        assert selector.day_length_signal == SignalID(name="signal-C", type="virtual")
+        assert selector.to_dict(version=(2, 1)) == {
+            "name": "selector-combinator",
+            "position": {"x": 0.5, "y": 1.0},
+            "control_behavior": {
+                "operation": "time",
+                "game_tick_signal": {"name": "signal-A", "type": "virtual"},
+                "day_tick_signal": {"name": "signal-B", "type": "virtual"},
+                "day_length_signal": {"name": "signal-C", "type": "virtual"},
+            },
+        }

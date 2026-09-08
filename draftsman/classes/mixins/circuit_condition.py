@@ -1,6 +1,6 @@
 # circuit_condition.py
 
-from draftsman.classes.mixins.control_behavior import ControlBehaviorMixin
+from draftsman.classes.mixins.base_condition import BaseConditionMixin
 from draftsman.serialization import draftsman_converters
 from draftsman import signatures
 from draftsman.validators import instance_of
@@ -10,7 +10,7 @@ from typing import Union
 
 
 @attrs.define(slots=False)
-class CircuitConditionMixin(ControlBehaviorMixin):
+class CircuitConditionMixin(BaseConditionMixin):
     """
     Allows the Entity to have an circuit condition (usually to enable it's
     function).

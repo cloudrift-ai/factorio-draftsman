@@ -3,7 +3,7 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     ModulesMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     RecipeMixin,
     EnergySourceMixin,
@@ -25,7 +25,7 @@ from typing import Iterable, Optional
 @attrs.define
 class RocketSilo(
     ModulesMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     RecipeMixin,
     EnergySourceMixin,
@@ -167,9 +167,20 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
         # None: fields.use_transitional_requests.name,
         # None: fields.transitional_request_index.name,
     },
+    subclasses_to_ignore=[CircuitConnectableMixin, RecipeMixin],
 )
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
+    RocketSilo,
+    lambda fields: {
+        None: fields.auto_launch.name,
+        ("control_behavior", "read_items_mode"): fields.read_items_mode.name,
+        "use_transitional_requests": fields.use_transitional_requests.name,
+        "transitional_request_index": fields.transitional_request_index.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     RocketSilo,
     lambda fields: {
         None: fields.auto_launch.name,

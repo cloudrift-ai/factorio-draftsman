@@ -25,8 +25,17 @@ class ReadAmmoMixin(Exportable):
     .. versionadded:: 3.0.0 (Factorio 2.0)
     """
 
+    def merge(self, other: "ReadAmmoMixin"):
+        super().merge(other)
+        self.read_ammo = other.read_ammo
+
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
+    ReadAmmoMixin,
+    lambda fields: {("control_behavior", "read_ammo"): fields.read_ammo.name},
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     ReadAmmoMixin,
     lambda fields: {("control_behavior", "read_ammo"): fields.read_ammo.name},
 )

@@ -45,7 +45,7 @@ The classic example of this is attempting to import an old Factorio blueprint st
 
     >>> # Here, our configuration is modern
     >>> mods.versions["base"]
-    (2, 0, 63, 0)
+    (2, 1, 17, 0)
 
     >>> # Say we have an old blueprint string which contains one "filter-inserter".
     >>> bp_string = "0eNp1j0sOgzAMRO8y64AaVH65SlVVfNzKEhiUhKoI5e4NsOmmO489fmNvaIeFZsviYTZwN4mDuW1w/JJm2Ht+nQkG7GmEgjTjrp48eLIJiyMbCwQFlp4+MDrcFUg8e6YTdYj1IcvYRqfRfyEK8+Ti3iR7bmRd0lxhhUl0mseEni1157jYU46TzM8HCm+y7jBklb6WdVZWVVXUOgvhC7N8TWA="

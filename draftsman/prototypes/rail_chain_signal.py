@@ -4,7 +4,7 @@ from draftsman.classes.collision_set import CollisionSet
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     ReadRailSignalMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
 )
@@ -22,7 +22,7 @@ from typing import Optional
 @attrs.define
 class RailChainSignal(
     ReadRailSignalMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
     Entity,

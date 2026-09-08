@@ -31,7 +31,21 @@ class CircuitEnableMixin(Exportable):
         self.circuit_enabled = other.circuit_enabled
 
 
-draftsman_converters.add_hook_fns(
+draftsman_converters.get_version((1, 0)).add_hook_fns(
+    CircuitEnableMixin,
+    lambda fields: {
+        ("control_behavior", "circuit_enable_disable"): fields.circuit_enabled.name
+    },
+)
+
+draftsman_converters.get_version((2, 0)).add_hook_fns(
+    CircuitEnableMixin,
+    lambda fields: {
+        ("control_behavior", "circuit_enabled"): fields.circuit_enabled.name
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     CircuitEnableMixin,
     lambda fields: {
         ("control_behavior", "circuit_enabled"): fields.circuit_enabled.name

@@ -32,7 +32,6 @@ class IOTypeMixin(Exportable):
 
     def merge(self, other: "IOTypeMixin"):
         super().merge(other)
-
         self.io_type = other.io_type
 
 

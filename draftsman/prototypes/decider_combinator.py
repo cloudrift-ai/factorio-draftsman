@@ -3,7 +3,6 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     PlayerDescriptionMixin,
-    ControlBehaviorMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     DirectionalMixin,
@@ -39,7 +38,6 @@ _signal_blacklist = {
 @attrs.define
 class DeciderCombinator(
     PlayerDescriptionMixin,
-    ControlBehaviorMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     DirectionalMixin,
@@ -425,7 +423,20 @@ class DeciderCombinator(
     __hash__ = Entity.__hash__
 
 
-draftsman_converters.add_hook_fns(
+draftsman_converters.get_version((1, 0)).add_hook_fns(
+    DeciderCombinator.Condition,
+    lambda fields: {
+        "first_signal": fields.first_signal.name,
+        "first_signal_networks": None,
+        "comparator": fields.comparator.name,
+        "constant": fields.constant.name,
+        "second_signal": fields.second_signal.name,
+        "second_signal_networks": None,
+        "compare_type": None,
+    },
+)
+
+draftsman_converters.get_version((2, 0)).add_hook_fns(
     DeciderCombinator.Condition,
     lambda fields: {
         "first_signal": fields.first_signal.name,

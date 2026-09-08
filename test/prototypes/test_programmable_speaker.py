@@ -29,7 +29,7 @@ def valid_programmable_speaker():
         quality="uncommon",
         tile_position=(1, 1),
         volume=1.0,
-        circuit_enabled=True,
+        # circuit_enabled=True,
         circuit_condition=Condition(
             first_signal="signal-A", comparator="<", second_signal="signal-B"
         ),

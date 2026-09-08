@@ -4,6 +4,7 @@ from draftsman.classes.blueprint import Blueprint
 from draftsman.classes.group import Group
 from draftsman.data import mods
 from draftsman.entity import ElectricPole, Container
+from draftsman.utils import AABB
 from draftsman.warning import UnknownEntityWarning
 
 from collections.abc import Hashable
@@ -78,6 +79,39 @@ class TestElectricPole:
 
         pole.quality = "legendary"
         assert pole.circuit_wire_max_distance is None
+
+    def test_supply_area_distance(self):
+        """
+        Ensure that supply area is correct and that it updates with pole
+        quality. `supply_area_distance` is half the tooltip's supply area, so
+        2.5 describes the small pole's 5x5.
+        """
+        pole = ElectricPole("small-electric-pole")
+        assert pole.supply_area_distance == 2.5
+
+        # Each quality level adds one tile of radius; legendary is level 5, so
+        # the small pole's 5x5 becomes 15x15 rather than 13x13.
+        expected = {"uncommon": 3.5, "rare": 4.5, "epic": 5.5, "legendary": 7.5}
+        for quality, distance in expected.items():
+            pole.quality = quality
+            if "quality" in mods.versions:
+                assert pole.supply_area_distance == distance
+            else:
+                assert pole.supply_area_distance == 2.5
+
+        with pytest.warns(UnknownEntityWarning):
+            pole = ElectricPole("unknown pole")
+        assert pole.supply_area_distance is None
+        assert pole.get_world_supply_area() is None
+
+    def test_get_world_supply_area(self):
+        pole = ElectricPole("medium-electric-pole", tile_position=(0, 0))
+        assert pole.get_world_supply_area() == AABB(-3, -3, 4, 4)
+
+        # A group offset must be applied, exactly as it is for bounding boxes
+        group = Group(position=(10, 10))
+        group.entities.append("medium-electric-pole", tile_position=(0, 0))
+        assert group.entities[0].get_world_supply_area() == AABB(7, 7, 14, 14)
 
     def test_mergable_with(self):
         group = Group()

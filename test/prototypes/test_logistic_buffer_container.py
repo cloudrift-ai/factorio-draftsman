@@ -14,6 +14,7 @@ from draftsman.data import mods
 
 from collections.abc import Hashable
 import pytest
+import warnings
 
 
 @pytest.fixture
@@ -184,7 +185,9 @@ class TestBufferContainer:
 
     def test_old_format_conversion(self):
         old_dict = {"name": "logistic-chest-buffer", "position": {"x": 0.5, "y": 0.5}}
-        chest = LogisticBufferContainer.from_dict(old_dict, version=(1, 0))
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=UnknownEntityWarning)
+            chest = LogisticBufferContainer.from_dict(old_dict, version=(1, 0))
         assert chest.to_dict(version=(1, 0)) == old_dict
 
         old_dict_with_filters = {  # TODO: actually validate this
@@ -198,7 +201,11 @@ class TestBufferContainer:
                 }
             ],
         }
-        chest = LogisticBufferContainer.from_dict(old_dict_with_filters, version=(1, 0))
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=UnknownEntityWarning)
+            chest = LogisticBufferContainer.from_dict(
+                old_dict_with_filters, version=(1, 0)
+            )
         assert len(chest.sections) == 1
         assert chest.sections == [
             ManualSection(

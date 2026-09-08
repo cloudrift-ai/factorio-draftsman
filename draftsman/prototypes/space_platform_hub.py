@@ -3,7 +3,7 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     RequestFiltersMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
 )
 from draftsman.serialization import draftsman_converters
@@ -19,7 +19,7 @@ from typing import Optional
 
 @attrs.define
 class SpacePlatformHub(
-    RequestFiltersMixin, ControlBehaviorMixin, CircuitConnectableMixin, Entity
+    RequestFiltersMixin, CircuitSplitIOMixin, CircuitConnectableMixin, Entity
 ):
     """
     .. versionadded:: 3.0.0 (Factorio 2.0)
@@ -30,6 +30,16 @@ class SpacePlatformHub(
     @property
     def similar_entities(self) -> list[str]:
         return space_platform_hubs
+
+    # =========================================================================
+
+    set_requests: bool = attrs.field(default=False, validator=instance_of(bool))
+    """
+    Whether or not this space platform should set it's requests dynamically via
+    its circuit network input wires.
+
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+    """
 
     # =========================================================================
 
@@ -115,10 +125,22 @@ class SpacePlatformHub(
 
     # =========================================================================
 
+    provide_to_other_platforms: bool = attrs.field(
+        default=False, validator=instance_of(bool)
+    )
+    """
+    Whether or not this platform should satisfy the requests of other platforms
+    in orbit if it's own requests for that item are sufficient.
+
+    .. versionadded:: 4.0.0 (Factorio 2.1)
+    """
+
+    # =========================================================================
+
     __hash__ = Entity.__hash__
 
 
-draftsman_converters.add_hook_fns(
+draftsman_converters.get_version((2, 0)).add_hook_fns(
     SpacePlatformHub,
     lambda fields: {
         ("control_behavior", "read_contents"): fields.read_contents.name,
@@ -130,5 +152,22 @@ draftsman_converters.add_hook_fns(
         ("control_behavior", "read_damage_taken"): fields.read_damage_taken.name,
         ("control_behavior", "damage_taken_signal"): fields.damage_taken_signal.name,
         "request_missing_construction_materials": fields.request_missing_construction_materials.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
+    SpacePlatformHub,
+    lambda fields: {
+        ("control_behavior", "set_requests"): fields.set_requests.name,
+        ("control_behavior", "read_contents"): fields.read_contents.name,
+        ("control_behavior", "send_to_platform"): fields.send_to_platform.name,
+        ("control_behavior", "read_moving_from"): fields.read_moving_from.name,
+        ("control_behavior", "read_moving_to"): fields.read_moving_to.name,
+        ("control_behavior", "read_speed"): fields.read_speed.name,
+        ("control_behavior", "speed_signal"): fields.speed_signal.name,
+        ("control_behavior", "read_damage_taken"): fields.read_damage_taken.name,
+        ("control_behavior", "damage_taken_signal"): fields.damage_taken_signal.name,
+        "request_missing_construction_materials": fields.request_missing_construction_materials.name,
+        "providing_to_other_platforms": fields.provide_to_other_platforms.name,
     },
 )

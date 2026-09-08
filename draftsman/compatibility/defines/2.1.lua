@@ -1,9 +1,3 @@
--- Current version: 2.1.17
--- Extracted with the command:
--- /c helpers.write_file("defines.lua", "defines = " .. serpent.block(defines, {indent="    "}))
-
--- TODO: extract these during environment update
-
 defines = {
     alert_type = {
         collector_path_blocked = 13,
@@ -83,8 +77,9 @@ defines = {
         return_last = 2
     },
     constant = {
-        default_icon_size = 64
+        default_icon_size = 64 -- 2.1.X should only use this value,
     },
+    default_icon_size = 64, -- but early versions seem to still require this one, so we patch it in manually
     control_behavior = {
         inserter = {
             hand_read_mode = {

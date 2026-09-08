@@ -32,7 +32,6 @@ class ColorMixin(Exportable):
 
     def merge(self, other: "ColorMixin"):
         super().merge(other)
-
         self.color = other.color
 
 

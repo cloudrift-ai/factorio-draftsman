@@ -25,6 +25,10 @@ class VariationMixin(Exportable):
     The graphical variation of the entity.
     """
 
+    def merge(self, other: "VariationMixin"):
+        super().merge(other)
+        self.variation = other.variation
+
 
 draftsman_converters.add_hook_fns(
     VariationMixin,

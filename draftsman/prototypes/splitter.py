@@ -2,7 +2,7 @@
 
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
 )
@@ -22,7 +22,7 @@ except ImportError:  # pragma: no coverage
 
 
 @attrs.define
-class Splitter(ControlBehaviorMixin, CircuitConnectableMixin, DirectionalMixin, Entity):
+class Splitter(CircuitSplitIOMixin, CircuitConnectableMixin, DirectionalMixin, Entity):
     """
     An entity that evenly splits a set of input belts between a set of output
     belts.
@@ -235,9 +235,35 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(
         "output_priority": fields.output_priority.name,
         "filter": (fields.filter, lambda inst: getattr(inst.filter, "name", None)),
     },
+    subclasses_to_ignore=[CircuitConnectableMixin],
 )
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
+    Splitter,
+    lambda fields: {
+        "input_priority": fields.input_priority.name,
+        ("control_behavior", "set_input_side"): fields.set_input_side.name,
+        ("control_behavior", "input_left_condition"): fields.input_left_condition.name,
+        (
+            "control_behavior",
+            "input_right_condition",
+        ): fields.input_right_condition.name,
+        "output_priority": fields.output_priority.name,
+        ("control_behavior", "set_output_side"): fields.set_output_side.name,
+        (
+            "control_behavior",
+            "output_left_condition",
+        ): fields.output_left_condition.name,
+        (
+            "control_behavior",
+            "output_right_condition",
+        ): fields.output_right_condition.name,
+        # In 2.0, "filter" is a fully qualified SignalID to handle quality ranges
+        "filter": fields.filter.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     Splitter,
     lambda fields: {
         "input_priority": fields.input_priority.name,

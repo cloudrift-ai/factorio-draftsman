@@ -116,6 +116,13 @@ class VehicleMixin(Exportable):
     Which gun is currently selected to fire by the gunner.
     """
 
+    def merge(self, other: "VehicleMixin"):
+        super().merge(other)
+        self.trunk_inventory = other.trunk_inventory
+        self.ammo_inventory = other.ammo_inventory
+        self.driver_is_main_gunner = other.driver_is_main_gunner
+        self.selected_gun_index = other.selected_gun_index
+
 
 draftsman_converters.add_hook_fns(
     VehicleMixin,

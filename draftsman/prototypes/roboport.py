@@ -3,7 +3,7 @@
 from draftsman.classes.entity import Entity
 from draftsman.classes.mixins import (
     RequestFiltersMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
 )
@@ -21,7 +21,7 @@ from typing import Optional
 @attrs.define
 class Roboport(
     RequestFiltersMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     EnergySourceMixin,
     Entity,
@@ -255,9 +255,39 @@ draftsman_converters.get_version((1, 0)).add_hook_fns(  # version 1.0
             "total_construction_output_signal",
         ): fields.total_construction_signal.name,
     },
+    subclasses_to_ignore=[RequestFiltersMixin],
 )
 
 draftsman_converters.get_version((2, 0)).add_hook_fns(
+    Roboport,
+    lambda fields: {
+        # "request_filters": fields.request_filters.name,
+        ("control_behavior", "read_items_mode"): fields.read_items_mode.name,
+        ("control_behavior", "read_robot_stats"): fields.read_robot_stats.name,
+        (
+            "control_behavior",
+            "available_logistic_output_signal",
+        ): fields.available_logistic_signal.name,
+        (
+            "control_behavior",
+            "total_logistic_output_signal",
+        ): fields.total_logistic_signal.name,
+        (
+            "control_behavior",
+            "available_construction_output_signal",
+        ): fields.available_construction_signal.name,
+        (
+            "control_behavior",
+            "total_construction_output_signal",
+        ): fields.total_construction_signal.name,
+        (
+            "control_behavior",
+            "roboport_count_output_signal",
+        ): fields.roboport_count_signal.name,
+    },
+)
+
+draftsman_converters.get_version((2, 1)).add_hook_fns(
     Roboport,
     lambda fields: {
         # "request_filters": fields.request_filters.name,

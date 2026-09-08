@@ -7,7 +7,7 @@ from draftsman.classes.mixins import (
     CircuitConditionMixin,
     LogisticConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
 )
@@ -24,7 +24,7 @@ class FluidTurret(
     CircuitConditionMixin,
     LogisticConditionMixin,
     CircuitEnableMixin,
-    ControlBehaviorMixin,
+    CircuitSplitIOMixin,
     CircuitConnectableMixin,
     DirectionalMixin,
     Entity,

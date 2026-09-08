@@ -20,6 +20,7 @@ import pytest
 from referencing import Registry, Resource
 from jsonschema import Draft202012Validator
 
+import copy
 import itertools
 import json
 import os
@@ -224,7 +225,24 @@ def retrieve_from_path(uri: str) -> Resource:
 
 registry = Registry(retrieve=retrieve_from_path)
 
-versions_to_test = ((1, 0, 0), (2, 0, 0))
+versions_to_test = ((1, 0, 0), (2, 0, 0), (2, 1, 0))
+
+
+def strictify_schema(schema):
+    strict_schema = copy.deepcopy(schema)
+
+    if strict_schema.get("type") == "object":
+        # We cannot use `"additionalProperties"`, since this will not look into
+        # "inherited" properties from `"allOf"` lists
+        # Instead we use `"unevaluatedProperties"` which seems to do what we
+        # want
+        strict_schema["unevaluatedProperties"] = False
+
+    if "properties" in strict_schema:
+        for prop, subschema in strict_schema["properties"].items():
+            strict_schema["properties"][prop] = strictify_schema(subschema)
+
+    return strict_schema
 
 
 @pytest.mark.parametrize("entity", entity_fixtures)
@@ -267,8 +285,15 @@ class TestAllEntities:
                 reason="No schema for '{}' on version {}".format(entity_name, version)
             )
 
-        Draft202012Validator.check_schema(entity_schema)
-        validator = Draft202012Validator(schema=entity_schema, registry=registry)
+        # The schema we get is permissive by default, since this aligns with how
+        # Factorio treats unrecognized keys
+        # We however want to make sure that our exported format matches exactly,
+        # so we specify `"additionalProperties": false` in every schema and sub
+        # schema
+        strict_schema = strictify_schema(entity_schema)
+
+        Draft202012Validator.check_schema(strict_schema)
+        validator = Draft202012Validator(schema=strict_schema, registry=registry)
         # Test every `exclude_...` configuration
         for exclude_none, exclude_defaults in itertools.product(
             (True, False), (True, False)

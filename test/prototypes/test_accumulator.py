@@ -18,6 +18,8 @@ def valid_accumulator():
         quality="uncommon",
         tile_position=(1, 1),
         output_signal="signal-B",
+        input_networks={"red"},
+        output_networks={"green"},
         tags={"blah": "blah"},
     )
 

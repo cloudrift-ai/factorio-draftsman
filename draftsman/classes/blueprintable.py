@@ -231,7 +231,7 @@ class Blueprintable(Exportable, metaclass=ABCMeta):
         >>> blueprint = Blueprint()
         >>> blueprint.icons = ["transport-belt"]
         >>> blueprint.icons
-        [Icon(index=0, signal=SignalID(name='transport-belt', type='item', quality='normal'))]
+        [Icon(index=0, signal=SignalID(name='transport-belt', type='item', quality='normal', comparator='='))]
     """
 
     # =========================================================================

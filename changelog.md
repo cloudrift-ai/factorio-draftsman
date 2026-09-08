@@ -1,9 +1,44 @@
 # Changelog
 
+* Merged `Sloneggs` pull request:
+  * Added `ItemRequestMigrationWarning`, issued when an item request cannot be represented in the target version's format and is dropped
+      * Exporting to `version=(1, 0)` silently discarded requests of non-normal quality, which could remove `items` from the output entirely
+      * Equipment grid requests exported to `version=(1, 0)` as a count of `0` rather than being omitted
+  * Added `ElectricPole.supply_area_distance` and `ElectricPole.get_world_supply_area()`
+      * Mirrors `circuit_wire_max_distance`, including the quality adjustment and returning `None` for unknown prototypes
+
+## 4.0.0
+* Updated `factorio-data` to version `2.1.17` (latest)
+* Updated `defines.lua` to version `2.1.17` (latest)
+* Added `(2, 1)` version import/export target
+* All entities that have split input/output selectable wires now have the `input_networks` and `output_networks` attributes
+    * Repurposed `ControlBehaviorMixin` into `CircuitSplitIOMixin`
+* All pipe types (`Pipe`, `UndergroundPipe`, `StorageTank`): 
+    * Circuit connectable
+    * `read_mode` determines how the fluid contents of the pipe/pipeline is broadcast
+    * Can broadcast the temperature of the contained fluid
+* `Boiler`: 
+    * Now circuit connectable
+    * Can be enabled/disabled via circuit condition
+    * Can be enabled/disabled via logistic condition
+    * `read_fuel` toggle (for applicable entities)
+* `Lab`:
+    * Now circuit connectable
+    * Research conditions enabled via `set_research` and `research_conditions`
+    * Added `read_contents`, `read_research_cost`, `read_technology_level`, and `technology_level_signal`
+* `LandMine`:
+    * Now circuit connectable
+    * Can be enabled/disabled via circuit condition
+* `HeatPipe`: 
+    * Now circuit connectable
+    * Can broadcast it's temperature
+* `Radar`:
+    * Added `mode`, `universe_channel`
+* `SpacePlatformHub`:
+    * Added `set_requests`, `provide_to_other_platforms`
 * Fixed #223 (Leaking debug log)
-* Added `ItemRequestMigrationWarning`, issued when an item request cannot be represented in the target version's format and is dropped
-    * Exporting to `version=(1, 0)` silently discarded requests of non-normal quality, which could remove `items` from the output entirely
-    * Equipment grid requests exported to `version=(1, 0)` as a count of `0` rather than being omitted
+* Fixed a bug in `examples/entities/decider_combinator.py`
+* Fixed tests that were too permissive when checking against each version's JSON schemas
 
 ## 3.3.1
 * Updated `factorio-data` to version `2.0.77` (latest)
